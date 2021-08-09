@@ -1,2 +1,2 @@
-export * from './isObject'
-export * from './sleep'
+export * from './isObject.ts'
+export * from './sleep.ts'
