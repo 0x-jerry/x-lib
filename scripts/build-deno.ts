@@ -1,7 +1,7 @@
 import path from 'path'
 import glob from 'fast-glob'
 import fs from 'fs/promises'
-import { transformAsync, PluginObj, types as Types } from '@babel/core'
+import { transformAsync, PluginObj } from '@babel/core'
 // @ts-ignore
 import tsSyntax from '@babel/plugin-syntax-typescript'
 
