@@ -14,8 +14,8 @@
   "scripts": {
     "test": "jest",
     "build": "yarn build:node && yarn build:deno",
-    "build:node": "tsc -p tsconfig.build.json",
-    "build:deno": "ts-node scripts/build-deno.ts",
+    "build:node": "rm -rf dist && tsc -p tsconfig.build.json",
+    "build:deno": "rm -rf deno && ts-node scripts/build-deno.ts",
     "release": "glib release"
   },
   "devDependencies": {

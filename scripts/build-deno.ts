@@ -1,6 +1,7 @@
 import path from 'path'
 import glob from 'fast-glob'
 import fs from 'fs/promises'
+import { existsSync } from 'fs'
 import { transformAsync, PluginObj } from '@babel/core'
 // @ts-ignore
 import tsSyntax from '@babel/plugin-syntax-typescript'
@@ -38,6 +39,10 @@ function node2deno(): PluginObj {
 
 async function main() {
   const files = await glob(['**/*.ts', '!**/*.test.ts'], { cwd: 'src' })
+
+  if (!existsSync(path.join('deno'))) {
+    await fs.mkdir(path.join('deno'))
+  }
 
   await Promise.all(
     files.map(async (file) => {
