@@ -1,5 +1,13 @@
 # lib
 
+Useful lib for myself.
+
+## node
+
+```sh
+$ yarn add @0x-jerry/lib
+```
+
 ## deno
 
 ```ts
