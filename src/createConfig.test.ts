@@ -5,7 +5,7 @@ interface IConf {
 }
 
 describe('createConfig', () => {
-  it('test', async () => {
+  it('read/save', async () => {
     let savedTimes = 0
 
     let savedData: IConf = {
