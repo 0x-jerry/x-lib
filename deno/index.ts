@@ -5,3 +5,4 @@ export * from "./dom/index.ts";
 export * from "./EventEmitter.ts";
 export * from "./createConfig.ts";
 export * from "./createSimpleLogger.ts";
+export * from "./toArray.ts";
