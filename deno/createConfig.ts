@@ -2,7 +2,7 @@
 import { reactive, effect, UnwrapNestedRefs } from '@vue/reactivity';
 import { isObject } from "./isObject.ts";
 type SaveFn<T> = (data: T) => void;
-type ReadFn<T> = () => Promise<T> | T;
+type ReadFn<T> = () => T;
 /**
  * @example
  *
@@ -21,8 +21,8 @@ type ReadFn<T> = () => Promise<T> | T;
  * @returns
  */
 
-export async function createConfig<T extends Record<string, any>>(read: ReadFn<T>, save: SaveFn<T>): Promise<[UnwrapNestedRefs<T>, () => Promise<void>]> {
-  const defaultConf = await read();
+export function createConfig<T extends Record<string, any>>(read: ReadFn<T>, save: SaveFn<T>): [UnwrapNestedRefs<T>, () => Promise<void>] {
+  const defaultConf = read();
   const data = reactive(defaultConf);
   let saving = Promise.resolve();
   let handler: any | undefined;
