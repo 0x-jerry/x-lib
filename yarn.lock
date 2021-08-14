@@ -888,6 +888,18 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@vue/reactivity@^3.2.2":
+  version "3.2.2"
+  resolved "https://registry.nlark.com/@vue/reactivity/download/@vue/reactivity-3.2.2.tgz#d37011a68395e038a3cf5256af52d48c591b06b6"
+  integrity sha1-03ARpoOV4Dijz1JWr1LUjFkbBrY=
+  dependencies:
+    "@vue/shared" "3.2.2"
+
+"@vue/shared@3.2.2":
+  version "3.2.2"
+  resolved "https://registry.nlark.com/@vue/shared/download/@vue/shared-3.2.2.tgz?cache=0&sync_timestamp=1628696922409&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40vue%2Fshared%2Fdownload%2F%40vue%2Fshared-3.2.2.tgz#6104185ebd57af5a14ac51c1f491b2205fc24054"
+  integrity sha1-YQQYXr1Xr1oUrFHB9JGyIF/CQFQ=
+
 abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"
   resolved "https://registry.npm.taobao.org/abab/download/abab-2.0.5.tgz?cache=0&sync_timestamp=1599850271460&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fabab%2Fdownload%2Fabab-2.0.5.tgz#c0b678fb32d60fc1219c784d6a826fe385aeb79a"
