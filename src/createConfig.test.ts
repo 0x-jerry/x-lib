@@ -18,7 +18,7 @@ describe('createConfig', () => {
       return Promise.resolve()
     }
 
-    const [conf, ensureSaved] = await createConfig(() => ({ test: 0 }), save)
+    const [conf, ensureSaved] = createConfig(() => ({ test: 0 }), save)
     conf.test++
     conf.test++
     await ensureSaved()
