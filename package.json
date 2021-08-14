@@ -19,6 +19,9 @@
     "build:deno": "rm -rf deno && ts-node scripts/build-deno.ts",
     "release": "glib release"
   },
+  "peerDependencies": {
+    "@vue/reactivity": "^3.2.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/plugin-syntax-typescript": "^7.14.5",
@@ -26,14 +29,12 @@
     "@types/fs-extra": "^9.0.12",
     "@types/jest": "^26.0.24",
     "@types/node": "^16.4.13",
+    "@vue/reactivity": "^3.2.2",
     "fast-glob": "^3.2.7",
     "fs-extra": "^10.0.0",
     "jest": "^27.0.6",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.2.0",
     "typescript": "^4.3.5"
-  },
-  "dependencies": {
-    "@vue/reactivity": "^3.2.2"
   }
 }
