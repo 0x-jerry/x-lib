@@ -1,4 +1,4 @@
 // @ts-nocheck
-export function isObject(o: unknown): o is Record<string, unknown> {
+export function isObject(o: any): o is Record<string | number | symbol, any> {
   return o !== null && typeof o === 'object';
 }
