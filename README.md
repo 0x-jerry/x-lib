@@ -14,7 +14,7 @@ $ yarn add @0x-jerry/lib @vue/reactivity
 import * from 'https://raw.githubusercontent.com/0x-jerry/x-lib/v0.1.0/mod.ts'
 ```
 
-`import_map.json` 中添加
+Add these to `import_map.json`
 
 ```json
 {
