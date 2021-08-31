@@ -39,7 +39,7 @@ export class KeyboardNavigator {
       return this.#activeElement;
     }
 
-    this.#activeElement = null;
+    this.#setActive(null);
     return null;
   }
 
@@ -66,16 +66,24 @@ export class KeyboardNavigator {
   }
 
   #setActive(el: HTMLElement | null) {
-    if (!el) return;
-    this.#opt.onblur(el);
-    this.#activeElement = el;
-    this.#opt.onfocus(el);
+    if (this.#activeElement) {
+      this.#opt.onblur(this.#activeElement);
+    }
+
+    if (el) {
+      this.#activeElement = el;
+      this.#opt.onfocus(el);
+    } else {
+      this.#activeElement = el;
+    }
   }
 
   #move(dir: KeyboardDir) {
     if (!this.activeElement) return;
     const nextElements = getNestElements(this.activeElement, this.#elements);
-    this.#setActive(nextElements[dir]);
+    const el = nextElements[dir];
+    if (!el) return;
+    this.#setActive(el);
   }
 
   enable() {
@@ -94,11 +102,12 @@ export class KeyboardNavigator {
 
   focus() {
     if (this.activeElement) return;
-    this.#setActive(this.#elements[0]);
+    const el = this.#elements[0];
+    this.#setActive(el);
   }
 
   blur() {
-    this.activeElement?.blur();
+    this.#setActive(null);
   }
 
   up() {
