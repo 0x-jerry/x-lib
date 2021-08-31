@@ -47,6 +47,10 @@ export class KeyboardNavigator {
     return null
   }
 
+  set activeElement(el: HTMLElement | null) {
+    this.#setActive(el)
+  }
+
   get isEnable() {
     return this.#isEnable
   }
