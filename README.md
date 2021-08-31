@@ -1,5 +1,7 @@
 # lib
 
+![test](https://github.com/0x-jerry/x-lib/actions/workflows/test.yml/badge.svg)
+
 Useful lib for myself.
 
 ## node
