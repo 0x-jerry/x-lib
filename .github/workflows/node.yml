@@ -1,10 +1,10 @@
-name: test
+name: node
 
 on:
   push:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -26,7 +26,6 @@ jobs:
       - name: Install pnpm
         run: curl -f https://get.pnpm.io/v6.14.js | node - add --global pnpm@6
 
-      - name: pnpm Build
-        run: pnpm install
+      - run: pnpm i
 
       - run: pnpm run test
