@@ -4,6 +4,31 @@
 
 import { createNavigator, utils } from './createNavigator'
 
+const getGlobalOffset = utils.getGlobalOffset
+
+describe('get global offset', () => {
+  it('#', () => {
+    const fakeEl = {
+      offsetTop: 0,
+      offsetLeft: 0,
+      offsetParent: {
+        offsetTop: 1,
+        offsetLeft: 2,
+        offsetParent: {
+          offsetTop: 1,
+          offsetLeft: 2,
+          offsetParent: null,
+        },
+      },
+    }
+
+    const [x, y] = getGlobalOffset(fakeEl as any)
+
+    expect(x).toBe(2)
+    expect(y).toBe(4)
+  })
+})
+
 // Only for testing, mock offset
 utils.getGlobalOffset = (el) => {
   const str = el.getAttribute('data-offset')
@@ -11,7 +36,7 @@ utils.getGlobalOffset = (el) => {
   return (str?.split(',').map((s) => parseInt(s)) as [number, number]) || [0, 0]
 }
 
-describe('create navigator', () => {
+describe('keyboard navigator', () => {
   it('focus', () => {
     const nav = createNav()
 
@@ -25,6 +50,16 @@ describe('create navigator', () => {
 
     nav.blur()
 
+    expect(nav.activeElement).toBeFalsy()
+  })
+
+  it('disconnect element', () => {
+    const nav = createNav()
+
+    nav.focus()
+    expect(nav.activeElement).toBeTruthy()
+
+    nav.rootEl.remove()
     expect(nav.activeElement).toBeFalsy()
   })
 
@@ -170,6 +205,8 @@ function createNav() {
     <div style="width: 100px; height: 100px;" id="8" tabindex="-1" data-offset="20,10"></div>
     <div style="width: 100px; height: 100px;" id="9" tabindex="-1" data-offset="20,20"></div>
   `
+
+  document.body.appendChild(div)
 
   return createNavigator(div)
 }

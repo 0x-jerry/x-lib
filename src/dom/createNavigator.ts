@@ -14,7 +14,13 @@ export class KeyboardNavigator {
   }
 
   get activeElement() {
-    return this.#activeElement
+    if (this.#activeElement?.isConnected) {
+      return this.#activeElement
+    }
+
+    this.#activeElement = null
+
+    return null
   }
 
   get isEnable() {
@@ -56,43 +62,43 @@ export class KeyboardNavigator {
   }
 
   focus() {
-    if (this.#activeElement) return
+    if (this.activeElement) return
 
     this.#setActive(this.#elements[0])
   }
 
   blur() {
-    this.#activeElement?.blur()
+    this.activeElement?.blur()
   }
 
   up() {
-    if (!this.#activeElement) return
+    if (!this.activeElement) return
 
-    const nextElements = getNestElements(this.#activeElement, this.#elements)
+    const nextElements = getNestElements(this.activeElement, this.#elements)
 
     this.#setActive(nextElements.up)
   }
 
   down() {
-    if (!this.#activeElement) return
+    if (!this.activeElement) return
 
-    const nextElements = getNestElements(this.#activeElement, this.#elements)
+    const nextElements = getNestElements(this.activeElement, this.#elements)
 
     this.#setActive(nextElements.down)
   }
 
   left() {
-    if (!this.#activeElement) return
+    if (!this.activeElement) return
 
-    const nextElements = getNestElements(this.#activeElement, this.#elements)
+    const nextElements = getNestElements(this.activeElement, this.#elements)
 
     this.#setActive(nextElements.left)
   }
 
   right() {
-    if (!this.#activeElement) return
+    if (!this.activeElement) return
 
-    const nextElements = getNestElements(this.#activeElement, this.#elements)
+    const nextElements = getNestElements(this.activeElement, this.#elements)
 
     this.#setActive(nextElements.right)
   }
@@ -162,7 +168,7 @@ export const utils = {
       top += current.offsetTop
       left += current.offsetLeft
 
-      current = el.offsetParent as HTMLElement | null
+      current = current.offsetParent as HTMLElement | null
     }
 
     return [top, left] as const
