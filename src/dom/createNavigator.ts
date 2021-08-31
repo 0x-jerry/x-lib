@@ -1,5 +1,29 @@
 import { createKeyboardHandler } from './createKeyboardHandler'
 
+export type KeyboardDir = 'left' | 'right' | 'up' | 'down'
+
+export interface KeyboardNavigatorOption {
+  onfocus: (e: HTMLElement) => any
+  onblur: (e: HTMLElement) => any
+  onenter: (e: HTMLElement) => any
+  /**
+   * Get all elements that should navigated.
+   */
+  getElements: (rootEl: HTMLElement) => NodeListOf<HTMLElement>
+}
+
+function defaultGetElements(rootEl: HTMLElement) {
+  return rootEl.querySelectorAll(`[tabindex='-1']`) as NodeListOf<HTMLElement>
+}
+
+function defaultOnfocus(el: HTMLElement) {
+  el.focus()
+}
+
+function defaultOnblur(el: HTMLElement) {
+  el.blur()
+}
+
 export class KeyboardNavigator {
   #handleKeydown
 
@@ -10,7 +34,7 @@ export class KeyboardNavigator {
   #activeElement: HTMLElement | null = null
 
   get #elements() {
-    return this.rootEl.querySelectorAll(`[tabindex='-1']`) as NodeListOf<HTMLElement>
+    return this.#opt.getElements(this.rootEl)
   }
 
   get activeElement() {
@@ -27,7 +51,20 @@ export class KeyboardNavigator {
     return this.#isEnable
   }
 
-  constructor(public readonly rootEl: Element) {
+  #opt: KeyboardNavigatorOption
+
+  constructor(public readonly rootEl: HTMLElement, opt: Partial<KeyboardNavigatorOption> = {}) {
+    const defaultOption: KeyboardNavigatorOption = {
+      onfocus: defaultOnfocus,
+      onblur: defaultOnblur,
+      onenter: () => {},
+      getElements: defaultGetElements,
+    }
+
+    this.#opt = Object.assign(defaultOption, opt)
+
+    opt
+
     this.#handleKeydown = createKeyboardHandler((listener) => {
       // Compatible with deno.
       globalThis.window.addEventListener('keydown', listener)
@@ -39,9 +76,17 @@ export class KeyboardNavigator {
   #setActive(el: HTMLElement | null) {
     if (!el) return
 
-    this.#activeElement?.blur()
+    this.#opt.onblur(el)
     this.#activeElement = el
-    this.#activeElement?.focus()
+    this.#opt.onfocus(el)
+  }
+
+  #move(dir: KeyboardDir) {
+    if (!this.activeElement) return
+
+    const nextElements = getNestElements(this.activeElement, this.#elements)
+
+    this.#setActive(nextElements[dir])
   }
 
   enable() {
@@ -52,6 +97,11 @@ export class KeyboardNavigator {
       this.#handleKeydown('down', () => this.down()),
       this.#handleKeydown('left', () => this.left()),
       this.#handleKeydown('right', () => this.right()),
+      this.#handleKeydown('enter', () => {
+        if (this.activeElement) {
+          this.#opt.onenter(this.activeElement)
+        }
+      }),
     ]
   }
 
@@ -72,35 +122,19 @@ export class KeyboardNavigator {
   }
 
   up() {
-    if (!this.activeElement) return
-
-    const nextElements = getNestElements(this.activeElement, this.#elements)
-
-    this.#setActive(nextElements.up)
+    this.#move('up')
   }
 
   down() {
-    if (!this.activeElement) return
-
-    const nextElements = getNestElements(this.activeElement, this.#elements)
-
-    this.#setActive(nextElements.down)
+    this.#move('down')
   }
 
   left() {
-    if (!this.activeElement) return
-
-    const nextElements = getNestElements(this.activeElement, this.#elements)
-
-    this.#setActive(nextElements.left)
+    this.#move('left')
   }
 
   right() {
-    if (!this.activeElement) return
-
-    const nextElements = getNestElements(this.activeElement, this.#elements)
-
-    this.#setActive(nextElements.right)
+    this.#move('right')
   }
 }
 
@@ -108,9 +142,7 @@ function getNestElements(
   activeElement: HTMLElement,
   elements: HTMLElement[] | NodeListOf<HTMLElement>
 ) {
-  type Dir = 'left' | 'right' | 'up' | 'down'
-
-  const nextEl: Record<Dir, HTMLElement | null> = {
+  const nextEl: Record<KeyboardDir, HTMLElement | null> = {
     up: null,
     down: null,
     left: null,
@@ -129,7 +161,13 @@ function getNestElements(
 
     const isVertical = Math.abs(offsetY) > Math.abs(offsetX)
 
-    const dir: Dir = isVertical ? (offsetY > 0 ? 'up' : 'down') : offsetX > 0 ? 'left' : 'right'
+    const dir: KeyboardDir = isVertical
+      ? offsetY > 0
+        ? 'up'
+        : 'down'
+      : offsetX > 0
+      ? 'left'
+      : 'right'
 
     if (!nextEl[dir]) {
       nextEl[dir] = item
@@ -175,6 +213,6 @@ export const utils = {
   },
 }
 
-export function createNavigator(rootEl: HTMLElement) {
-  return new KeyboardNavigator(rootEl)
+export function createNavigator(rootEl: HTMLElement, opt: Partial<KeyboardNavigatorOption> = {}) {
+  return new KeyboardNavigator(rootEl, opt)
 }

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { createNavigator, utils } from './createNavigator'
+import { createNavigator, KeyboardNavigatorOption, utils } from './createNavigator'
 
 const getGlobalOffset = utils.getGlobalOffset
 
@@ -135,7 +135,15 @@ describe('keyboard navigator', () => {
       key: 'ArrowRight',
     })
 
-    const nav = createNav()
+    let activeEl: HTMLElement | null = null
+    let times = 0
+
+    const nav = createNav({
+      onenter(e) {
+        times++
+        activeEl = e
+      },
+    })
 
     nav.focus()
     window.dispatchEvent(fakeKeydownEvent)
@@ -143,6 +151,15 @@ describe('keyboard navigator', () => {
 
     window.dispatchEvent(fakeKeydownEvent)
     expect(nav.activeElement?.id).toBe('3')
+
+    window.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+      })
+    )
+
+    expect(times).toBe(1)
+    expect(activeEl).toBe(nav.activeElement)
   })
 
   it('move', () => {
@@ -185,7 +202,7 @@ describe('keyboard navigator', () => {
   })
 })
 
-function createNav() {
+function createNav(opt: Partial<KeyboardNavigatorOption> = {}) {
   const div = document.createElement('div')
 
   /**
@@ -208,5 +225,5 @@ function createNav() {
 
   document.body.appendChild(div)
 
-  return createNavigator(div)
+  return createNavigator(div, opt)
 }
