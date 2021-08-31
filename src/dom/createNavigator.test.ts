@@ -38,19 +38,52 @@ utils.getGlobalOffset = (el) => {
 
 describe('keyboard navigator', () => {
   it('focus', () => {
-    const nav = createNav()
+    let times = 0
+    let el: HTMLElement | null = null
+
+    const nav = createNav({
+      onfocus(e) {
+        times++
+        el = e
+      },
+    })
 
     nav.focus()
 
     expect(nav.activeElement?.id).toBe('1')
+    expect(el).toBe(nav.activeElement)
+    expect(times).toBe(1)
+
+    nav.focus()
+    expect(el).toBe(nav.activeElement)
+    expect(times).toBe(1)
   })
 
   it('blur', () => {
-    const nav = createNav()
+    let times = 0
+    let el: HTMLElement | null = null
+
+    const nav = createNav({
+      onblur(e) {
+        times++
+        el = e
+      },
+    })
+
+    nav.focus()
+
+    const activeEl = nav.activeElement
 
     nav.blur()
 
     expect(nav.activeElement).toBeFalsy()
+
+    expect(el).toBe(activeEl)
+    expect(times).toBe(1)
+
+    nav.blur()
+    expect(el).toBe(activeEl)
+    expect(times).toBe(1)
   })
 
   it('disconnect element', () => {
