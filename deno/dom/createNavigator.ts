@@ -43,6 +43,10 @@ export class KeyboardNavigator {
     return null;
   }
 
+  set activeElement(el: HTMLElement | null) {
+    this.#setActive(el);
+  }
+
   get isEnable() {
     return this.#isEnable;
   }
@@ -57,7 +61,6 @@ export class KeyboardNavigator {
       getElements: defaultGetElements
     };
     this.#opt = Object.assign(defaultOption, opt);
-    opt;
     this.#handleKeydown = createKeyboardHandler(listener => {
       // Compatible with deno.
       globalThis.window.addEventListener('keydown', listener);
