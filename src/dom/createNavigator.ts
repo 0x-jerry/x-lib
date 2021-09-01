@@ -67,8 +67,6 @@ export class KeyboardNavigator {
 
     this.#opt = Object.assign(defaultOption, opt)
 
-    opt
-
     this.#handleKeydown = createKeyboardHandler((listener) => {
       // Compatible with deno.
       globalThis.window.addEventListener('keydown', listener)
