@@ -2,8 +2,7 @@ import { Fn } from './typing'
 
 export function debounce<T extends Fn>(fn: T, wait: number): (...args: Parameters<T>) => void {
   let trailingHandle: any
-  let leadingCalled = false
-  let lastCalledTime = -1
+  let lastCalledTime = 0
 
   return function (this: T, ...params) {
     const now = new Date().getTime()
@@ -12,14 +11,6 @@ export function debounce<T extends Fn>(fn: T, wait: number): (...args: Parameter
     const callFn = () => {
       lastCalledTime = new Date().getTime()
       fn.apply(this, params)
-    }
-
-    // leading
-    if (!leadingCalled) {
-      leadingCalled = true
-
-      callFn()
-      return
     }
 
     // check exact time interval

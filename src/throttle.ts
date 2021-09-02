@@ -1,8 +1,7 @@
 import { Fn } from './typing'
 
 export function throttle<T extends Fn>(fn: T, timeFrame: number): (...args: Parameters<T>) => void {
-  let leadingCalled = false
-  let lastCalledTime = -1
+  let lastCalledTime = 0
 
   let trailingHandle: any
 
@@ -13,13 +12,6 @@ export function throttle<T extends Fn>(fn: T, timeFrame: number): (...args: Para
     const callFn = () => {
       lastCalledTime = new Date().getTime()
       fn.apply(this, params)
-    }
-
-    // leading
-    if (!leadingCalled) {
-      leadingCalled = true
-      callFn()
-      return
     }
 
     // exact time interval
