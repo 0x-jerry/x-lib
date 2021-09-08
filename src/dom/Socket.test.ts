@@ -6,6 +6,8 @@ import { Server } from 'mock-socket'
 import { sleep } from '../sleep'
 import { isObject } from '../isObject'
 
+let port = 7999
+
 describe('Socket', () => {
   it('non-exists web socket server', async () => {
     const socket = new Socket('ws://127.0.0.1:7979')
@@ -66,9 +68,32 @@ describe('Socket', () => {
       expect(fn).toBeCalledTimes(1)
     })
   })
+
+  it('duplicate success connections', (done) => {
+    const [socket] = setupSocketServer(done)
+
+    expect(socket.connected).toBe(false)
+
+    socket.send({})
+    socket.send({}).then(() => {
+      console.log('hello')
+      expect(socket.connected).toBe(true)
+    })
+  })
+
+  it('duplicate failed connections', async () => {
+    const socket = new Socket('ws://127.0.0.1:7979')
+
+    expect(socket.socket).toBeFalsy()
+
+    try {
+      await Promise.all([socket.send({}), socket.send({})])
+    } catch (error) {
+      expect(error).toBeTruthy()
+    }
+  })
 })
 
-let port = 7999
 function setupSocketServer(done: () => void) {
   // mock
   const mockUrl = `ws://localhost:${port++}`

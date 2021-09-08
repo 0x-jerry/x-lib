@@ -233,6 +233,34 @@ describe('keyboard navigator', () => {
     nav.left()
     expect(nav.activeElement?.id).toBe('1')
   })
+
+  it('disable', () => {
+    const nav = createNav()
+
+    expect(nav.isEnable).toBe(true)
+
+    nav.disable()
+    expect(nav.isEnable).toBe(false)
+
+    nav.left()
+    expect(nav.activeElement).toBeFalsy()
+  })
+
+  it('set activeElement', () => {
+    const nav = createNav()
+    nav.focus()
+
+    nav.right()
+    expect(nav.activeElement?.id).toBe('2')
+    const el = nav.activeElement!
+
+    nav.right()
+    expect(nav.activeElement?.id).toBe('3')
+
+    nav.activeElement = el
+    nav.right()
+    expect(nav.activeElement?.id).toBe('3')
+  })
 })
 
 function createNav(opt: Partial<KeyboardNavigatorOption> = {}) {
