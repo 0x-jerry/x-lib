@@ -24,7 +24,7 @@ describe('LRU', () => {
     lru.set('1', '1')
     expect(lru.get('1')).toBe('1')
 
-    await sleep(2)
+    await sleep(10)
     expect(lru.get('1')).toBeUndefined()
   })
 })
