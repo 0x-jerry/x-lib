@@ -10,3 +10,4 @@ export * from "./toArray.ts";
 export * from "./tplStrings.ts";
 export * from "./throttle.ts";
 export * from "./debounce.ts";
+export * from "./LRU.ts";

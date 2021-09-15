@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { Fn } from "./typing.ts";
 export function throttle<T extends Fn>(fn: T, timeFrame: number): (...args: Parameters<T>) => void {
-  let leadingCalled = false;
-  let lastCalledTime = -1;
+  let lastCalledTime = 0;
   let trailingHandle: any;
   return function (this: T, ...params) {
     const now = new Date().getTime();
@@ -11,14 +10,7 @@ export function throttle<T extends Fn>(fn: T, timeFrame: number): (...args: Para
     const callFn = () => {
       lastCalledTime = new Date().getTime();
       fn.apply(this, params);
-    }; // leading
-
-
-    if (!leadingCalled) {
-      leadingCalled = true;
-      callFn();
-      return;
-    } // exact time interval
+    }; // exact time interval
 
 
     if (now - lastCalledTime >= timeFrame) {
