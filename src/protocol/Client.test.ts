@@ -47,4 +47,27 @@ describe('Protocol Client', () => {
 
     expect(res).toEqual({ data: 'world' })
   })
+
+  it('send error', async () => {
+    const TestType = 'test'
+
+    const fn = jest.fn()
+    const client = new ProtocolClient({
+      send() {
+        throw new Error('send Error')
+      },
+      init(receive) {
+        fn()
+        clientEvt.on(TestType, (e) => {
+          receive(e)
+        })
+      },
+    })
+
+    expect(fn).toBeCalledTimes(1)
+
+    const res = client.get(TestType, { data: 'hello' })
+
+    expect(res).rejects.toBeInstanceOf(Error)
+  })
 })
