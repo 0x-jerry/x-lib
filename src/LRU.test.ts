@@ -27,4 +27,18 @@ describe('LRU', () => {
     await sleep(10)
     expect(lru.get('1')).toBeUndefined()
   })
+
+  it('unset key', async () => {
+    const lru = new LRU({ maxAge: 1 })
+    expect(lru.get('1')).toBeUndefined()
+  })
+
+  it('reset', async () => {
+    const lru = new LRU()
+    lru.set('1', '1')
+    expect(lru.get('1')).toBe('1')
+
+    lru.reset()
+    expect(lru.get('1')).toBeUndefined()
+  })
 })
