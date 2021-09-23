@@ -4,9 +4,4 @@ export interface ProtocolData<Data = any, MsgType = string> {
   data?: Data
 }
 
-export interface ProtocolOptions {
-  send(data: ProtocolData): Promise<any> | any
-  init(receiveMsg: (data: ProtocolData) => void): Promise<any> | any
-}
-
 export type ProtocolResponseFn = (data: any) => Promise<any> | any

@@ -1,14 +1,19 @@
 import { EventEmitter } from '../EventEmitter'
-import { ProtocolOptions, ProtocolData } from './shared'
+import { ProtocolData } from './shared'
+
+export interface ProtocolClientOptions {
+  send(data: ProtocolData): Promise<any> | any
+  init(receiveMsg: (data: ProtocolData) => void): Promise<any> | any
+}
 
 export class ProtocolClient {
   #event = new EventEmitter()
 
   #uid = 1
 
-  #proxyClient: ProtocolOptions
+  #proxyClient: ProtocolClientOptions
 
-  constructor(opt: ProtocolOptions) {
+  constructor(opt: ProtocolClientOptions) {
     this.#proxyClient = opt
 
     this.#proxyClient.init(this.#resolveMsg)

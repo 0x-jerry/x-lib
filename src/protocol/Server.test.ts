@@ -16,15 +16,15 @@ describe('Protocol Server', () => {
 
     let clientReceive = null
 
-    const server = new ProtocolServer({
-      send(data) {
-        clientReceive = data.data
-      },
-      init(receive) {
-        serverEvt.on(TestType, (e) => {
-          receive(e)
+    const server = new ProtocolServer((receive) => {
+      serverEvt.on(TestType, (e) => {
+        receive({
+          ...e,
+          send: (data) => {
+            clientReceive = data.data
+          },
         })
-      },
+      })
     })
 
     let receive: any = null
@@ -34,6 +34,7 @@ describe('Protocol Server', () => {
         data: 'world',
       }
     })
+
     server.start()
 
     serverEvt.emit(TestType, { type: TestType, id: 1, data: 'hello' })

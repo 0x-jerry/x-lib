@@ -1,13 +1,15 @@
-import { ProtocolResponseFn, ProtocolOptions, ProtocolData } from './shared'
+import { ProtocolResponseFn, ProtocolData } from './shared'
+
+interface ProtocolServerContext extends ProtocolData {
+  send(data: ProtocolData): any
+}
+
+type ProtocolServerInitFn = (resolveMessage: (data: ProtocolServerContext) => any) => any
 
 export class ProtocolServer {
   #events = new Map<string, ProtocolResponseFn>()
 
-  #proxyServer: ProtocolOptions
-
-  constructor(opt: ProtocolOptions) {
-    this.#proxyServer = opt
-  }
+  constructor(readonly init: ProtocolServerInitFn) {}
 
   #createProtocol(id: string, type: string, data: any): ProtocolData {
     return {
@@ -29,8 +31,8 @@ export class ProtocolServer {
     }
   }
 
-  #resolveMsg = async (rawData: ProtocolData) => {
-    const { type, id, data } = rawData
+  #resolveMsg = async (ctx: ProtocolServerContext) => {
+    const { type, id, data, send } = ctx
     const fn = this.#events.get(type)
     if (!fn) {
       // ignore
@@ -41,11 +43,11 @@ export class ProtocolServer {
 
     const sendData = this.#createProtocol(id, type, responseData)
 
-    this.#proxyServer.send(sendData)
+    send(sendData)
   }
 
   start() {
-    this.#proxyServer.init(this.#resolveMsg)
+    this.init(this.#resolveMsg)
   }
 
   /**
