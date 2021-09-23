@@ -1,3 +1,3 @@
-export function isObject(o: any): o is Record<string | number | symbol, any> {
+export function isObject(o: any): o is Object {
   return o !== null && typeof o === 'object'
 }
