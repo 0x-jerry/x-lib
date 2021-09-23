@@ -49,16 +49,16 @@ export function createConfig<T extends Record<string, any>>(read: ReadFn<T>, sav
  */
 
 function traverse(o: unknown) {
-  if (isObject(o)) {
-    for (const key in o) {
-      if (Object.prototype.hasOwnProperty.call(o, key)) {
-        const value = o[key];
-        traverse(value);
-      }
-    }
-  } else if (Array.isArray(o)) {
+  if (Array.isArray(o)) {
     for (const item of o) {
       traverse(item);
+    }
+  } else if (isObject(o)) {
+    for (const key in o) {
+      if (Object.prototype.hasOwnProperty.call(o, key)) {
+        const value = (o as any)[key];
+        traverse(value);
+      }
     }
   }
 }
