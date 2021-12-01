@@ -4,12 +4,8 @@ interface ProtocolServerContext extends ProtocolData {
   send(data: ProtocolData): any
 }
 
-type ProtocolServerInitFn = (resolveMessage: (data: ProtocolServerContext) => any) => any
-
 export class ProtocolServer {
   #events = new Map<string, ProtocolResponseFn>()
-
-  constructor(readonly init: ProtocolServerInitFn) {}
 
   #createProtocol(id: string, type: string, data: any): ProtocolData {
     return {
@@ -46,8 +42,8 @@ export class ProtocolServer {
     send(sendData)
   }
 
-  start() {
-    this.init(this.#resolveMsg)
+  resolve(ctx: ProtocolServerContext) {
+    this.#resolveMsg(ctx)
   }
 
   /**

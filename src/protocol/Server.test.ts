@@ -17,14 +17,14 @@ describe('Protocol Server', () => {
 
     let clientReceive = null
 
-    const server = new ProtocolServer((receive) => {
-      serverEvt.on(TestType, (e) => {
-        receive({
-          ...e,
-          send: (data) => {
-            clientReceive = data.data
-          },
-        })
+    const server = new ProtocolServer()
+
+    serverEvt.on(TestType, (e) => {
+      server.resolve({
+        ...e,
+        send: (data) => {
+          clientReceive = data.data
+        },
       })
     })
 
@@ -35,8 +35,6 @@ describe('Protocol Server', () => {
         data: 'world',
       }
     })
-
-    server.start()
 
     serverEvt.emit(TestType, { type: TestType, id: 1, data: 'hello' })
     await sleep(10)
@@ -48,15 +46,14 @@ describe('Protocol Server', () => {
     const TestType = 'test1'
 
     let clientReceive = null
+    const server = new ProtocolServer()
 
-    const server = new ProtocolServer((receive) => {
-      serverEvt.on(TestType, (e) => {
-        receive({
-          ...e,
-          send: (data) => {
-            clientReceive = data.data
-          },
-        })
+    serverEvt.on(TestType, (e) => {
+      server.resolve({
+        ...e,
+        send: (data) => {
+          clientReceive = data.data
+        },
       })
     })
 
@@ -68,8 +65,6 @@ describe('Protocol Server', () => {
       }
     })
 
-    server.start()
-
     serverEvt.emit(TestType, { type: 'unknown type', id: 1, data: 'hello' })
     await sleep(10)
 
@@ -78,7 +73,7 @@ describe('Protocol Server', () => {
   })
 
   it('on the same type, emit a warning', async () => {
-    const server = new ProtocolServer(() => {})
+    const server = new ProtocolServer()
 
     const fn = jest.spyOn(global.console, 'warn')
 
@@ -92,15 +87,14 @@ describe('Protocol Server', () => {
     const TestType = 'test1'
 
     let clientReceive = null
+    const server = new ProtocolServer()
 
-    const server = new ProtocolServer((receive) => {
-      serverEvt.on(TestType, (e) => {
-        receive({
-          ...e,
-          send: (data) => {
-            clientReceive = data.data
-          },
-        })
+    serverEvt.on(TestType, (e) => {
+      server.resolve({
+        ...e,
+        send: (data) => {
+          clientReceive = data.data
+        },
       })
     })
 
@@ -109,8 +103,6 @@ describe('Protocol Server', () => {
       receive = data
       throw new Error('unknown')
     })
-
-    server.start()
 
     serverEvt.emit(TestType, { type: TestType, id: 1, data: 'hello' })
     await sleep(10)
