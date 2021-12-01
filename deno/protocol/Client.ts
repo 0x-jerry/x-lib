@@ -43,7 +43,7 @@ export class ProtocolClient {
    */
 
 
-  async send(type: string, params: any) {
+  async send(type: string, params?: any) {
     const sendData = this.#createProtocol(type, params);
     return new Promise<any>(async (resolve, reject) => {
       const success = (data: any) => resolve(data);
