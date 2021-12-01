@@ -4,4 +4,4 @@ export interface ProtocolData<Data = any, MsgType = string> {
   type: MsgType;
   data?: Data;
 }
-export type ProtocolResponseFn = (data: any) => Promise<any> | any;
+export type ProtocolResponseFn = (params: any) => Promise<any> | any;
