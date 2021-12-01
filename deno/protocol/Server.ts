@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { ProtocolResponseFn, ProtocolData } from "./shared.ts";
+import { ProtocolData } from "./shared.ts";
+type ProtocolResponseFn = (params: any) => Promise<any> | any;
 interface ProtocolServerContext extends ProtocolData {
   send(data: ProtocolData): any;
 }

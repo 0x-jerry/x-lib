@@ -1,10 +1,6 @@
 // @ts-nocheck
 import { EventEmitter } from "../EventEmitter.ts";
 import { ProtocolData } from "./shared.ts";
-export interface ProtocolClientOptions {
-  send(data: ProtocolData): Promise<any> | any;
-  init(receiveMsg: (data: ProtocolData) => void): Promise<any> | any;
-}
 type ProtocolSendFn = (data: ProtocolData) => Promise<any> | any;
 export class ProtocolClient {
   #event = new EventEmitter();
