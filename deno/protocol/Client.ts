@@ -53,9 +53,8 @@ export class ProtocolClient {
       try {
         await this.#send?.(sendData);
       } catch (error) {
-        reject(error);
-      } finally {
         this.#event.off(sendData.id, success);
+        reject(error);
       }
     });
   }
