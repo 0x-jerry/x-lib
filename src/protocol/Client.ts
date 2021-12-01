@@ -54,8 +54,9 @@ export class ProtocolClient {
       try {
         await this.#send?.(sendData)
       } catch (error) {
-        this.#event.off(sendData.id, success)
         reject(error)
+      } finally {
+        this.#event.off(sendData.id, success)
       }
     })
   }

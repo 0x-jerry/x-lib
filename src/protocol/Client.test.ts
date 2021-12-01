@@ -52,10 +52,8 @@ describe('Protocol Client', () => {
     const fn = jest.fn()
     const client = new ProtocolClient()
 
-    client.setSender((data) => {
-      expect(data.type).toBe(TestType)
-
-      serverEvt.emit(data.type, data)
+    client.setSender(() => {
+      throw new Error('send Error')
     })
 
     clientEvt.on(TestType, (e) => {
@@ -63,10 +61,10 @@ describe('Protocol Client', () => {
       client.resolve(e)
     })
 
-    const res = client.send(TestType, { data: 'hello' })
+    await expect(async () => {
+      await client.send(TestType, { data: 'hello' })
+    }).rejects.toBeInstanceOf(Error)
 
-    expect(fn).toBeCalledTimes(1)
-
-    expect(res).rejects.toBeInstanceOf(Error)
+    expect(fn).toBeCalledTimes(0)
   })
 })
