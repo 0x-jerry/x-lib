@@ -38,7 +38,7 @@ describe('Protocol Client', () => {
       })
     })
 
-    const res = await client.on(TestType, { data: 'hello' })
+    const res = await client.send(TestType, { data: 'hello' })
     expect(fn).toBeCalledTimes(1)
 
     expect(fn2).toBeCalledTimes(1)
@@ -63,7 +63,7 @@ describe('Protocol Client', () => {
       client.resolve(e)
     })
 
-    const res = client.on(TestType, { data: 'hello' })
+    const res = client.send(TestType, { data: 'hello' })
 
     expect(fn).toBeCalledTimes(1)
 
