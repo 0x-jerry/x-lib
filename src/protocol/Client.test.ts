@@ -14,18 +14,17 @@ describe('Protocol Client', () => {
     const TestType = 'test'
 
     const fn = jest.fn()
-    const client = new ProtocolClient({
-      send(data) {
-        expect(data.type).toBe(TestType)
+    const client = new ProtocolClient()
 
-        serverEvt.emit(data.type, data)
-      },
-      init(receive) {
-        fn()
-        clientEvt.on(TestType, (e) => {
-          receive(e)
-        })
-      },
+    client.setSender((data) => {
+      expect(data.type).toBe(TestType)
+
+      serverEvt.emit(data.type, data)
+    })
+
+    clientEvt.on(TestType, (e) => {
+      fn()
+      client.resolve(e)
     })
 
     const fn2 = jest.fn()
@@ -39,9 +38,8 @@ describe('Protocol Client', () => {
       })
     })
 
+    const res = await client.on(TestType, { data: 'hello' })
     expect(fn).toBeCalledTimes(1)
-
-    const res = await client.get(TestType, { data: 'hello' })
 
     expect(fn2).toBeCalledTimes(1)
 
@@ -52,21 +50,22 @@ describe('Protocol Client', () => {
     const TestType = 'test'
 
     const fn = jest.fn()
-    const client = new ProtocolClient({
-      send() {
-        throw new Error('send Error')
-      },
-      init(receive) {
-        fn()
-        clientEvt.on(TestType, (e) => {
-          receive(e)
-        })
-      },
+    const client = new ProtocolClient()
+
+    client.setSender((data) => {
+      expect(data.type).toBe(TestType)
+
+      serverEvt.emit(data.type, data)
     })
 
-    expect(fn).toBeCalledTimes(1)
+    clientEvt.on(TestType, (e) => {
+      fn()
+      client.resolve(e)
+    })
 
-    const res = client.get(TestType, { data: 'hello' })
+    const res = client.on(TestType, { data: 'hello' })
+
+    expect(fn).toBeCalledTimes(1)
 
     expect(res).rejects.toBeInstanceOf(Error)
   })
