@@ -5,16 +5,11 @@ export interface ProtocolClientOptions {
   send(data: ProtocolData): Promise<any> | any;
   init(receiveMsg: (data: ProtocolData) => void): Promise<any> | any;
 }
+type ProtocolSendFn = (data: ProtocolData) => Promise<any> | any;
 export class ProtocolClient {
   #event = new EventEmitter();
   #uid = 1;
-  #proxyClient: ProtocolClientOptions;
-
-  constructor(opt: ProtocolClientOptions) {
-    this.#proxyClient = opt;
-    this.#proxyClient.init(this.#resolveMsg);
-  }
-
+  #send: ProtocolSendFn;
   #resolveMsg = (rawData: ProtocolData) => {
     const {
       id,
@@ -30,6 +25,14 @@ export class ProtocolClient {
       data
     };
   }
+
+  setSender(send: ProtocolSendFn) {
+    this.#send = send;
+  }
+
+  resolve(data: any) {
+    this.#resolveMsg(data);
+  }
   /**
    * @example
    * ```ts
@@ -44,7 +47,7 @@ export class ProtocolClient {
    */
 
 
-  async get(type: string, params: any) {
+  async on(type: string, params: any) {
     const sendData = this.#createProtocol(type, params);
     return new Promise<any>(async (resolve, reject) => {
       const success = (data: any) => resolve(data);
@@ -52,7 +55,7 @@ export class ProtocolClient {
       this.#event.once(sendData.id, success);
 
       try {
-        await this.#proxyClient.send(sendData);
+        await this.#send?.(sendData);
       } catch (error) {
         this.#event.off(sendData.id, success);
         reject(error);
