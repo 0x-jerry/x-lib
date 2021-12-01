@@ -30,12 +30,15 @@ describe('Protocol Client', () => {
     const fn2 = jest.fn()
     serverEvt.on(TestType, (data) => {
       fn2()
-      clientEvt.emit(TestType, {
-        ...data,
-        data: {
-          data: 'world',
-        },
-      })
+
+      setTimeout(() => {
+        clientEvt.emit(TestType, {
+          ...data,
+          data: {
+            data: 'world',
+          },
+        })
+      }, 100)
     })
 
     const res = await client.send(TestType, { data: 'hello' })
