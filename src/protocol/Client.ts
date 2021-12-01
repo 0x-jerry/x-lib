@@ -1,11 +1,6 @@
 import { EventEmitter } from '../EventEmitter'
 import { ProtocolData } from './shared'
 
-export interface ProtocolClientOptions {
-  send(data: ProtocolData): Promise<any> | any
-  init(receiveMsg: (data: ProtocolData) => void): Promise<any> | any
-}
-
 type ProtocolSendFn = (data: ProtocolData) => Promise<any> | any
 
 export class ProtocolClient {

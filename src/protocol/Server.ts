@@ -1,4 +1,6 @@
-import { ProtocolResponseFn, ProtocolData } from './shared'
+import { ProtocolData } from './shared'
+
+type ProtocolResponseFn = (params: any) => Promise<any> | any
 
 interface ProtocolServerContext extends ProtocolData {
   send(data: ProtocolData): any
