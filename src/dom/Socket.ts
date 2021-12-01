@@ -8,6 +8,16 @@ type WebSocketEvents = {
   'parse-msg-error'(e: any): void
 }
 
+interface SocketFormatter {
+  beforeReceive(data: string): any
+  beforeSend(data: any): string
+}
+
+const defaultFormatter: SocketFormatter = {
+  beforeReceive: (data) => JSON.parse(data),
+  beforeSend: (data) => JSON.stringify(data),
+}
+
 export class Socket extends EventEmitter<WebSocketEvents> {
   #s?: WebSocket
 
@@ -22,6 +32,8 @@ export class Socket extends EventEmitter<WebSocketEvents> {
   get connected() {
     return this.#s?.readyState === WebSocket.OPEN
   }
+
+  formatter = defaultFormatter
 
   constructor(public url: string) {
     super()
@@ -67,7 +79,7 @@ export class Socket extends EventEmitter<WebSocketEvents> {
 
       socket.onmessage = (ev) => {
         try {
-          const data = JSON.parse(ev.data)
+          const data = this.formatter.beforeReceive(ev.data)
           this.emit('message', data)
         } catch (error) {
           this.emit('parse-msg-error', error)
@@ -82,6 +94,6 @@ export class Socket extends EventEmitter<WebSocketEvents> {
       await this.#connect()
     }
 
-    this.#s!.send(JSON.stringify(data))
+    this.#s!.send(this.formatter.beforeSend(data))
   }
 }
