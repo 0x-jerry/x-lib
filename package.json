@@ -26,7 +26,7 @@
     "@babel/plugin-syntax-typescript": "^7.16.0",
     "@exyz/glib": "^0.4.4",
     "@types/fs-extra": "^9.0.13",
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^27.0.3",
     "@types/node": "^16.11.11",
     "@vue/reactivity": "^3.2.23",
     "fast-glob": "^3.2.7",
