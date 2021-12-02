@@ -5,6 +5,24 @@ type ProtocolSendFn = (data: ProtocolData) => Promise<any> | any
 
 let uid = 0
 
+/**
+ * @example
+ *
+ * ```ts
+ * const client = new ProtocolClient()
+ *
+ * window.onmessage = (data) => {
+ *  client.resolve(data)
+ * }
+ *
+ * client.setSender(data => {
+ *  window.top.postMessage(data)
+ * })
+ *
+ * const res = await client.send('test')
+ * console.log(res)
+ * ```
+ */
 export class ProtocolClient {
   #event = new EventEmitter()
 
