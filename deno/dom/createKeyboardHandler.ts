@@ -21,6 +21,10 @@ const keyShortMap: Record<string, string> = {
   up: 'ArrowUp',
   down: 'ArrowDown'
 };
+const splitSymbol = ({
+  split: ',',
+  combo: '+'
+} as const);
 
 function parseKeyOption(key: string) {
   const opt: KeyOption = {
@@ -30,7 +34,7 @@ function parseKeyOption(key: string) {
     alt: false,
     shift: false
   };
-  const keys = key.split(/[+,]/g).filter(n => !!n.trim()).map(n => {
+  const keys = key.split(splitSymbol.combo).filter(n => !!n.trim()).map(n => {
     const s = n.trim();
     return keyShortMap[s] || s;
   });
@@ -49,12 +53,13 @@ type InitializeEventListener = (listener: KeyboardEventListener) => void;
  * ```ts
  * const onKeydown = createKeyboardHandler((fn) => window.addEventListener('keydown', fn))
  *
- * onKeydown('meta,a|meta,b', () => {})
+ * onKeydown('meta+a, meta+b', () => {})
  *
  * onKeydown('meta+a', () => {})
  *
- * const cancel = onKeydown('b', () => {})
- * cancel()
+ * const stop = onKeydown('b', () => {})
+ *
+ * stop()
  * ```
  * @param initializeFn
  * @returns
@@ -87,7 +92,7 @@ export const createKeyboardHandler = (initializeFn: InitializeEventListener) => 
   }
 
   return function handle(keys: string, listener: KeyboardEventListener) {
-    const cancels = keys.split('|').map(key => handleListener(listener, parseKeyOption(key)));
+    const cancels = keys.split(splitSymbol.split).map(key => handleListener(listener, parseKeyOption(key)));
     return () => {
       for (const cancel of cancels) {
         cancel();

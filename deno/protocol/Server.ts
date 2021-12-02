@@ -27,7 +27,7 @@ export class ProtocolServer {
     }
   }
 
-  #resolveMsg = async (ctx: ProtocolServerContext) => {
+  resolve = async (ctx: ProtocolServerContext) => {
     const {
       type,
       id,
@@ -45,10 +45,6 @@ export class ProtocolServer {
     const sendData = this.#createProtocol(id, type, responseData);
     send(sendData);
   };
-
-  resolve(ctx: ProtocolServerContext) {
-    this.#resolveMsg(ctx);
-  }
   /**
    * @example
    * ```ts
@@ -65,7 +61,6 @@ export class ProtocolServer {
    * @param type
    * @param fn
    */
-
 
   on(type: string, fn: ProtocolResponseFn) {
     if (this.#events.has(type)) {

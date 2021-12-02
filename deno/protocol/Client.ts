@@ -1,22 +1,20 @@
 // @ts-nocheck
 import { EventEmitter } from "../EventEmitter.ts";
-import { ProtocolData } from "./shared.ts";
+import { CustomProtocolEvents, ProtocolData } from "./shared.ts";
 type ProtocolSendFn = (data: ProtocolData) => Promise<any> | any;
+let uid = 0;
 export class ProtocolClient {
   #event = new EventEmitter();
-  #uid = 1;
   #send: ProtocolSendFn;
-  #resolveMsg = (rawData: ProtocolData) => {
-    const {
-      id,
-      data
-    } = rawData;
-    this.#event.emit(id, data);
-  };
+
+  constructor() {
+    // Convenient for pass to other functions.
+    this.send = this.send.bind(this);
+  }
 
   #createProtocol(type: string, data: any): ProtocolData {
     return {
-      id: (this.#uid++).toString(),
+      id: (uid++).toString(),
       type,
       data
     };
@@ -26,9 +24,13 @@ export class ProtocolClient {
     this.#send = send;
   }
 
-  resolve(data: any) {
-    this.#resolveMsg(data);
-  }
+  resolve = (rawData: ProtocolData) => {
+    const {
+      id,
+      data
+    } = rawData;
+    this.#event.emit(id, data);
+  };
   /**
    * @example
    * ```ts
@@ -42,8 +44,9 @@ export class ProtocolClient {
    * @returns
    */
 
+  send<T extends keyof ProtocolEvents>(type: T, ...params: Parameters<ProtocolEvents[T]>): Promise<ReturnType<ProtocolEvents[T]>>;
 
-  async send(type: string, params?: any) {
+  async send(type: string, ...params: any[]): Promise<any> {
     const sendData = this.#createProtocol(type, params);
     return new Promise<any>(async (resolve, reject) => {
       const success = (data: any) => resolve(data);
@@ -60,3 +63,6 @@ export class ProtocolClient {
   }
 
 }
+type ProtocolEvents = CustomProtocolEvents & {
+  [type: string]: (...params: any[]) => any;
+};
