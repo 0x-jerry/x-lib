@@ -29,7 +29,7 @@ export class ProtocolServer {
     }
   }
 
-  #resolveMsg = async (ctx: ProtocolServerContext) => {
+  resolve = async (ctx: ProtocolServerContext) => {
     const { type, id, data, send } = ctx
     const fn = this.#events.get(type)
     if (!fn) {
@@ -42,10 +42,6 @@ export class ProtocolServer {
     const sendData = this.#createProtocol(id, type, responseData)
 
     send(sendData)
-  }
-
-  resolve(ctx: ProtocolServerContext) {
-    this.#resolveMsg(ctx)
   }
 
   /**

@@ -89,7 +89,7 @@ export class Socket extends EventEmitter<WebSocketEvents> {
     })
   }
 
-  async send(data: any) {
+  send = async (data: any) => {
     if (!this.connected) {
       await this.#connect()
     }

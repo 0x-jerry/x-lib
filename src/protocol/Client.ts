@@ -3,21 +3,16 @@ import { ProtocolData } from './shared'
 
 type ProtocolSendFn = (data: ProtocolData) => Promise<any> | any
 
+let uid = 0
+
 export class ProtocolClient {
   #event = new EventEmitter()
 
-  #uid = 1
-
   #send?: ProtocolSendFn
-
-  #resolveMsg = (rawData: ProtocolData) => {
-    const { id, data } = rawData
-    this.#event.emit(id, data)
-  }
 
   #createProtocol(type: string, data: any): ProtocolData {
     return {
-      id: (this.#uid++).toString(),
+      id: (uid++).toString(),
       type,
       data,
     }
@@ -27,8 +22,9 @@ export class ProtocolClient {
     this.#send = send
   }
 
-  resolve(data: any) {
-    this.#resolveMsg(data)
+  resolve = (rawData: ProtocolData) => {
+    const { id, data } = rawData
+    this.#event.emit(id, data)
   }
 
   /**
@@ -43,7 +39,7 @@ export class ProtocolClient {
    * @param params
    * @returns
    */
-  async send(type: string, params?: any) {
+  send = async (type: string, params?: any) => {
     const sendData = this.#createProtocol(type, params)
 
     return new Promise<any>(async (resolve, reject) => {
