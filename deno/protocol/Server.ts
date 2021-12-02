@@ -4,6 +4,28 @@ type ProtocolResponseFn = (params: any) => Promise<any> | any;
 interface ProtocolServerContext extends ProtocolData {
   send(data: ProtocolData): any;
 }
+/**
+ * @example
+ *
+ * ```ts
+ * const server = new ProtocolServer()
+ *
+ * server.on('test', () => {
+ *  return 'boom!'
+ * })
+ *
+ * window.onmessage = (data) => {
+ *  server.resolve({
+ *    ...data,
+ *    send(data) {
+ *      window.top.postMessage(data)
+ *    }
+ *  })
+ * }
+ *
+ * ```
+ */
+
 export class ProtocolServer {
   #events = new Map<string, ProtocolResponseFn>();
 
