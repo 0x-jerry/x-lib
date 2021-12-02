@@ -56,7 +56,7 @@ describe('crateKeyboardHandler', () => {
 
     const fn = jest.fn()
 
-    onKeydown('meta, k', fn)
+    onKeydown('meta + k', fn)
 
     window.dispatchEvent(fakeKeydownEvent)
     expect(fn).toBeCalledTimes(1)
@@ -70,7 +70,7 @@ describe('crateKeyboardHandler', () => {
 
     const fn = jest.fn()
 
-    onKeydown('meta, k | meta, o', fn)
+    onKeydown('meta+k, meta+o', fn)
 
     window.dispatchEvent(fakeKeydownEvent)
     expect(fn).toBeCalledTimes(1)
