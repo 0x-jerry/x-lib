@@ -7,14 +7,8 @@ const serverEvt = new EventEmitter()
 /**
  * test typedef
  */
-declare module './shared' {
-  /**
-   * Component Custom Properties for Points
-   *
-   */
-  export interface CustomProtocolEvents {
-    test(opt: { data: string }): { data: string }
-  }
+interface CustomProtocolEvents {
+  test(opt: { data: string }): { data: string }
 }
 
 describe('Protocol Client', () => {
@@ -27,7 +21,7 @@ describe('Protocol Client', () => {
     const TestType = 'test'
 
     const fn = jest.fn()
-    const client = new ProtocolClient()
+    const client = new ProtocolClient<CustomProtocolEvents>()
 
     client.setSender((data) => {
       expect(data.type).toBe(TestType)

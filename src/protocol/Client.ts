@@ -1,5 +1,5 @@
 import { EventEmitter } from '../EventEmitter'
-import { CustomProtocolEvents, ProtocolData } from './shared'
+import { ProtocolData } from './shared'
 
 type ProtocolSendFn = (data: ProtocolData) => Promise<any> | any
 
@@ -23,13 +23,14 @@ let uid = 0
  * console.log(res)
  * ```
  */
-export class ProtocolClient {
+export class ProtocolClient<EventTypeDef = {}> {
   #event = new EventEmitter()
 
   #send?: ProtocolSendFn
 
   constructor() {
     // Convenient for pass to other functions.
+    // @ts-ignore
     this.send = this.send.bind(this)
   }
 
@@ -62,10 +63,10 @@ export class ProtocolClient {
    * @param params
    * @returns
    */
-  send<T extends keyof ProtocolEvents>(
+  send<T extends keyof ProtocolEvents<EventTypeDef>>(
     type: T,
-    ...params: Parameters<ProtocolEvents[T]>
-  ): Promise<ReturnType<ProtocolEvents[T]>>
+    ...params: Parameters<ProtocolEvents<EventTypeDef>[T]>
+  ): Promise<ReturnType<ProtocolEvents<EventTypeDef>[T]>>
 
   async send(type: string, ...params: any[]): Promise<any> {
     const sendData = this.#createProtocol(type, params)
@@ -85,6 +86,6 @@ export class ProtocolClient {
   }
 }
 
-type ProtocolEvents = CustomProtocolEvents & {
+type ProtocolEvents<T> = T & {
   [type: string]: (...params: any[]) => any
 }
