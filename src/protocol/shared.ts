@@ -3,3 +3,5 @@ export interface ProtocolData<Data = any, MsgType = string> {
   type: MsgType
   data?: Data
 }
+
+export declare interface CustomProtocolEvents {}

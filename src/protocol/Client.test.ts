@@ -4,6 +4,19 @@ import { ProtocolClient } from './Client'
 const clientEvt = new EventEmitter()
 const serverEvt = new EventEmitter()
 
+/**
+ * test typedef
+ */
+declare module './shared' {
+  /**
+   * Component Custom Properties for Points
+   *
+   */
+  export interface CustomProtocolEvents {
+    test(opt: { data: string }): { data: string }
+  }
+}
+
 describe('Protocol Client', () => {
   afterAll(() => {
     clientEvt.off()
