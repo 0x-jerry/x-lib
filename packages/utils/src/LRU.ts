@@ -1,86 +1,175 @@
+import assert from 'assert'
 import { getNow } from './utils'
 
 interface LRUOptions {
-  count: number
+  /**
+   * @default 500
+   */
+  limit: number
+  /**
+   * @default 1d
+   */
   maxAge: number
 }
 
-interface Node<K, V> {
+interface Node<K = unknown, V = unknown> {
   key: K
   value: V
+
   age: number
-  now: number
+  create: number
+
+  previous?: Node<K, V>
+  next?: Node<K, V>
 }
 
-export class LRU<Key = string, Value = any> {
-  /**
-   * @private
-   */
-  cache: Node<Key, Value>[] = []
+class NodeImplement<K, V> implements Node<K, V> {
+  key: K
+  value: V
 
-  readonly count: number
+  age: number
+  create: number
+
+  constructor(key: K, value: V, age: number) {
+    this.key = key
+    this.value = value
+    this.age = age
+    this.create = new Date().getTime()
+  }
+
+  previous?: Node<K, V>
+  next?: Node<K, V>
+}
+
+/**
+ * Least Recently Used
+ *
+ * O(1)
+ */
+export class LRU<Key = string, Value = unknown> {
+  _cache = new Map<Key, Node<Key, Value>>()
+  _tail?: Node<Key, Value>
+  _lead?: Node<Key, Value>
+
+  readonly limit: number
   readonly maxAge: number
 
+  _oldestKey?: Key
+
   constructor(option: Partial<LRUOptions> = {}) {
-    this.count = option.count ?? 500
+    this.limit = option.limit ?? 500
     this.maxAge = option.maxAge ?? 24 * 60 * 60 * 1000
+    assert(this.limit, 'option.limit should be greater than 0')
   }
 
-  set(key: Key, value: Value) {
-    const now = getNow()
-    const list = this.cache
+  set(key: Key, value: Value): void {
+    if (this._cache.has(key)) {
+      const node = this._cache.get(key)!
+      node.value = value
+      this.touchExistOne(node)
 
-    const hitIdx = list.findIndex((f) => f.key === key)
+      return
+    }
 
-    if (hitIdx >= 0) {
-      const item = list[hitIdx]
-      item.now = now
-      item.value = value
+    // new node
+    const node = new NodeImplement(key, value, this.maxAge)
 
-      list.splice(hitIdx, 1)
-      list.unshift(item)
-    } else {
-      const item = {
-        key,
-        value,
-        age: this.maxAge,
-        now: now,
+    if (this._cache.size === 0) {
+      this._lead = node
+      this._tail = node
+      this._cache.set(node.key, node)
+
+      return
+    }
+
+    if (this._cache.size === this.limit) {
+      this._cache.delete(this._tail!.key)
+      this._tail = this._tail?.previous || node
+
+      if (this._tail) {
+        this._tail!.next = undefined
       }
 
-      this.cache.unshift(item)
+      this._lead!.previous = node
+      node.next = this._lead
+      this._lead = node
+
+      this._cache.set(node.key, node)
+      return
     }
 
-    if (this.cache.length >= this.count) {
-      this.cache.length = this.count
-    }
+    this._lead!.previous = node
+    node.next = this._lead
+    this._lead = node
+
+    this._cache.set(node.key, node)
   }
 
-  get(key: Key) {
-    const list = this.cache
-    const idx = list.findIndex((i) => i.key === key)
-
-    if (idx < 0) {
+  get(key: Key): Value | undefined {
+    if (!this._cache.has(key)) {
       return
     }
 
-    const item = list[idx]
+    const node = this._cache.get(key)!
 
-    list.splice(idx, 1)
+    if (isExpire(node)) {
+      this._cache.delete(node.key)
 
-    const now = getNow()
+      if (node.previous && node.next) {
+        node.previous.next = node.next
+        node.next.previous = node.previous
+      } else if (node.previous) {
+        this._tail = node.previous
+        this._tail.next = undefined
+      } else {
+        this.reset()
+      }
 
-    // check expire
-    if (now - item.now > item.age) {
       return
     }
 
-    item.now = now
-    list.unshift(item)
+    this.touchExistOne(node)
 
-    return item.value
+    return node.value
+  }
+
+  touchExistOne(node: Node<Key, Value>) {
+    node.create = getNow()
+
+    if (node.next && node.previous) {
+      node.next.previous = node.previous
+      node.previous.next = node.next
+
+      this._lead!.previous = node
+
+      node.next = this._lead
+      node.previous = undefined
+
+      this._lead = node
+      return
+    }
+
+    if (node.previous) {
+      node.previous.next = undefined
+      this._tail = node.previous
+
+      this._lead!.previous = node
+
+      node.next = this._lead
+      node.previous = undefined
+
+      this._lead = node
+      return
+    }
   }
 
   reset() {
-    this.cache = []
+    this._cache.clear()
+    this._lead = undefined
+    this._tail = undefined
   }
+}
+
+function isExpire(item: Node<unknown, unknown>, now: number = getNow()) {
+  return now - item.create > item.age
 }
