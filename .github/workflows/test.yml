@@ -29,4 +29,6 @@ jobs:
 
       - run: pnpm i
 
+      - run: pnpm run setup
+
       - run: pnpm run test
