@@ -1,4 +1,4 @@
-import { sleep } from '.'
+import { sleep } from './exports'
 import { LRU } from './LRU'
 
 describe('LRU', () => {

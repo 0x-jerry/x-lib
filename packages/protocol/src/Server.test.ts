@@ -1,7 +1,6 @@
-import { sleep } from '../../../src/sleep'
-import { EventEmitter } from '../../../src/EventEmitter'
+import { sleep } from '@0x-jerry/utils'
+import { EventEmitter } from '@0x-jerry/events'
 import { ProtocolServer } from './Server'
-import console from 'console'
 
 const clientEvt = new EventEmitter()
 const serverEvt = new EventEmitter()

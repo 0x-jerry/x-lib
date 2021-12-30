@@ -1,5 +1,5 @@
 import { reactive, effect, UnwrapNestedRefs } from '@vue/reactivity'
-import { isObject } from './isObject'
+import { isObject } from '@0x-jerry/utils'
 
 type SaveFn<T> = (data: T) => void
 type ReadFn<T> = () => T

@@ -1,5 +1,5 @@
 {
-  "name": "@0x-jerry/protocol",
+  "name": "@0x-jerry/dom-navigator",
   "version": "0.0.1",
   "license": "MIT",
   "main": "./dist/exports.js",
@@ -19,7 +19,6 @@
     "release": "x-release"
   },
   "dependencies": {
-    "@0x-jerry/events": "workspace:*",
-    "@0x-jerry/utils": "workspace:*"
+    "@0x-jerry/key-events": "workspace:*"
   }
 }

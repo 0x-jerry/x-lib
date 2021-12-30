@@ -1,4 +1,4 @@
-import { EventEmitter } from '../EventEmitter'
+import { EventEmitter } from '@0x-jerry/events'
 
 type WebSocketEvents = {
   error(e: any): void

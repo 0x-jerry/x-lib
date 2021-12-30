@@ -1,4 +1,4 @@
-import { createKeyboardHandler } from './createKeyboardHandler'
+import { createKeyboardHandler } from '@0x-jerry/key-events'
 
 export type KeyboardDir = 'left' | 'right' | 'up' | 'down'
 

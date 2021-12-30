@@ -1,4 +1,4 @@
-import { EventEmitter } from '../../src/EventEmitter'
+import { EventEmitter } from '@0x-jerry/events'
 import { ProtocolClient } from './Client'
 
 const clientEvt = new EventEmitter()

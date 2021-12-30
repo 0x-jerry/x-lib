@@ -3,8 +3,7 @@
  */
 import { Socket } from './Socket'
 import { Server } from 'mock-socket'
-import { sleep } from '../../src/sleep'
-import { isObject } from '../../src/isObject'
+import { sleep, isObject } from '@0x-jerry/utils'
 
 let port = 7999
 
