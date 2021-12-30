@@ -24,28 +24,25 @@ importers:
       tsup: registry.npmmirror.com/tsup/5.11.9_ts-node@10.4.0+typescript@4.5.4
       typescript: registry.npmmirror.com/typescript/4.5.4
 
-  packages/x-conf:
+  packages/conf:
     specifiers: {}
 
-  packages/x-events:
+  packages/events:
     specifiers: {}
 
-  packages/x-key-events:
+  packages/key-events:
     specifiers: {}
 
-  packages/x-logger:
+  packages/logger:
     specifiers: {}
 
-  packages/x-other:
+  packages/protocol:
     specifiers: {}
 
-  packages/x-protocol:
+  packages/socket:
     specifiers: {}
 
-  packages/x-socket:
-    specifiers: {}
-
-  packages/x-utils:
+  packages/utils:
     specifiers: {}
 
 packages:

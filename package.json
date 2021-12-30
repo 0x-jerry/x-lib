@@ -2,6 +2,9 @@
   "name": "x-lib",
   "version": "0.0.1",
   "license": "MIT",
+  "scripts": {
+    "test": "ts-node ./scripts/runAllTests.ts"
+  },
   "devDependencies": {
     "@0x-jerry/eslint-config": "^0.2.0",
     "@types/jest": "^27.0.3",
