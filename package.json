@@ -3,13 +3,17 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "test": "ts-node ./scripts/runAllTests.ts"
+    "rp": "ts-node ./scripts/runAll.ts",
+    "setup": "pnpm run rp build",
+    "test": "pnpm run rp test",
+    "release": "pnpm run rp release"
   },
   "devDependencies": {
     "@0x-jerry/eslint-config": "^0.2.0",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.17",
     "eslint": "^7.32.0",
+    "execa": "^5.1.1",
     "jest": "^27.4.5",
     "ts-jest": "^27.1.2",
     "ts-node": "^10.4.0",
