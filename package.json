@@ -1,41 +1,16 @@
 {
-  "name": "@0x-jerry/lib",
-  "version": "0.9.11",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "name": "x-lib",
+  "version": "0.0.1",
   "license": "MIT",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "build": "yarn build:node && yarn build:deno",
-    "build:node": "rm -rf dist && tsup src/index.ts --dts",
-    "build:deno": "rm -rf deno && ts-node scripts/build-deno.ts",
-    "release": "glib release"
-  },
-  "peerDependencies": {
-    "@vue/reactivity": "^3.2.2"
-  },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
-    "@babel/plugin-syntax-typescript": "^7.16.0",
-    "@exyz/glib": "^0.4.4",
-    "@types/fs-extra": "^9.0.13",
+    "@0x-jerry/eslint-config": "^0.2.0",
     "@types/jest": "^27.0.3",
-    "@types/node": "^16.11.11",
-    "@vue/reactivity": "^3.2.23",
-    "fast-glob": "^3.2.7",
-    "fs-extra": "^10.0.0",
-    "jest": "^27.4.2",
-    "mock-socket": "^9.0.8",
-    "ts-jest": "^27.0.7",
+    "@types/node": "^16.11.17",
+    "eslint": "^7.32.0",
+    "jest": "^27.4.5",
+    "ts-jest": "^27.1.2",
     "ts-node": "^10.4.0",
-    "tsup": "^5.10.0",
-    "typescript": "^4.5.2"
+    "tsup": "^5.11.9",
+    "typescript": "^4.5.4"
   }
 }

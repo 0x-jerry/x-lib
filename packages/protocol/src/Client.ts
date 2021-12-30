@@ -1,5 +1,5 @@
-import { EventEmitter } from '../EventEmitter'
-import { ProtocolData } from './shared'
+import { EventEmitter } from '../../../src/EventEmitter'
+import { ProtocolData } from './src/shared'
 
 type ProtocolSendFn = (data: ProtocolData) => Promise<any> | any
 

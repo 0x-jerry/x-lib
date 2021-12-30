@@ -1,4 +1,4 @@
-import { EventEmitter } from '../EventEmitter'
+import { EventEmitter } from '../../src/EventEmitter'
 import { ProtocolClient } from './Client'
 
 const clientEvt = new EventEmitter()

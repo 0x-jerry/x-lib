@@ -1,5 +1,5 @@
-import { sleep } from '../sleep'
-import { EventEmitter } from '../EventEmitter'
+import { sleep } from '../../../src/sleep'
+import { EventEmitter } from '../../../src/EventEmitter'
 import { ProtocolServer } from './Server'
 import console from 'console'
 

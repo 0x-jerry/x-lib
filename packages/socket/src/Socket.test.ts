@@ -3,8 +3,8 @@
  */
 import { Socket } from './Socket'
 import { Server } from 'mock-socket'
-import { sleep } from '../sleep'
-import { isObject } from '../isObject'
+import { sleep } from '../../src/sleep'
+import { isObject } from '../../src/isObject'
 
 let port = 7999
 
