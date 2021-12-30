@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "rp": "ts-node ./scripts/runAll.ts",
-    "setup": "pnpm run rp build",
+    "setup": "ts-node ./scripts/setup.ts",
     "test": "pnpm run rp test",
     "release": "pnpm run rp release"
   },

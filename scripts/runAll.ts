@@ -1,7 +1,7 @@
 import assert from 'assert'
-import execa from 'execa'
 import fs from 'fs/promises'
 import path from 'path'
+import { runInProject } from './shared'
 
 const packagesDir = path.join(process.cwd(), 'packages')
 
@@ -33,13 +33,4 @@ async function main(params: string[]) {
     const cmd = [command, ...runConf.params].join(' ')
     await runInProject(cmd, packageCwd)
   }
-}
-
-async function runInProject(script: string, cwd: string) {
-  return run(`pnpm run ${script}`, cwd)
-}
-
-async function run(cmd: string, cwd?: string) {
-  console.log('$', cwd + ':', cmd)
-  await execa('sh', ['-c', cmd], { stdio: 'inherit', cwd })
 }
