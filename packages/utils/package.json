@@ -16,6 +16,6 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "build": "tsup src/exports.ts --format cjs,esm --dts",
-    "release": "x-release --tag '@0x-jerry/utils@${version}' --commit 'chore: release @0x-jerry/utils@v${version}' --npm pnpm"
+    "release": "x-release --tag '@0x-jerry/utils@${version}' --commit 'chore: release @0x-jerry/utils@${version}' --npm pnpm"
   }
 }
