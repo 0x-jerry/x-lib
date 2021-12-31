@@ -16,6 +16,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "build": "tsup src/exports.ts --format cjs,esm --dts",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
     "release": "x-release"
   },
   "dependencies": {},

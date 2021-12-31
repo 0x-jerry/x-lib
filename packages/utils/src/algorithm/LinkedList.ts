@@ -1,7 +1,5 @@
 import { toArray } from '../toArray'
 
-export interface LinkedListOption {}
-
 export class LinkedNode<T = unknown> {
   /**
    * if value is a LinkedNode, then return itself, else create a new LinkedNode.

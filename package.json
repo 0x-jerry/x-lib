@@ -12,6 +12,7 @@
     "@0x-jerry/eslint-config": "^0.2.0",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.17",
+    "conventional-changelog-cli": "^2.2.2",
     "eslint": "^7.32.0",
     "execa": "^5.1.1",
     "jest": "^27.4.5",
