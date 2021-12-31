@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@0x-jerry/eslint-config": "^0.2.0",
+    "@0x-jerry/x-release": "^0.3.2",
     "@types/jest": "^27.4.0",
     "@types/node": "^16.11.17",
     "conventional-changelog-cli": "^2.2.2",
