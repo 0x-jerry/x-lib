@@ -1,0 +1,25 @@
+{
+  "name": "@0x-jerry/algorithm",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "./dist/exports.js",
+  "module": "./dist/exports.mjs",
+  "types": "./dist/exports.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "build": "tsup src/exports.ts --format cjs,esm --dts",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
+    "release": "x-release --tag 'algorithm@v${version}' --npm pnpm"
+  },
+  "dependencies": {
+    "@0x-jerry/utils": "workspace:*"
+  }
+}

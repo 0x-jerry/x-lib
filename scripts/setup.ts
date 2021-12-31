@@ -15,6 +15,7 @@ async function main() {
 
     'dom-navigator',
     'conf',
+    'algorithm',
 
     'socket',
     'protocol',

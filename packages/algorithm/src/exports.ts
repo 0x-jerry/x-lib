@@ -1,2 +1,2 @@
-export * from './LinkedList'
 export * from './DoublyLinkedList'
+export * from './LinkedList'

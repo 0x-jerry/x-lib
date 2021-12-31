@@ -1,4 +1,4 @@
-import { toArray } from '../toArray'
+import { toArray } from '@0x-jerry/utils'
 
 export class DoublyLinkedNode<T = unknown> {
   /**

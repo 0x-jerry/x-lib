@@ -28,6 +28,12 @@ importers:
       tsup: registry.npmmirror.com/tsup/5.11.9_ts-node@10.4.0+typescript@4.5.4
       typescript: registry.npmmirror.com/typescript/4.5.4
 
+  packages/algorithm:
+    specifiers:
+      '@0x-jerry/utils': workspace:*
+    dependencies:
+      '@0x-jerry/utils': link:../utils
+
   packages/conf:
     specifiers:
       '@0x-jerry/utils': workspace:*
