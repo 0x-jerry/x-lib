@@ -125,6 +125,28 @@ export class DoublyLinkedList<T = unknown> {
    * @param value
    */
   remove(value: T): DoublyLinkedNode<T> | undefined {
+    const removedNode = this.findNode((o) => o.value === value)
+
+    if (!removedNode) return
+
+    const previousNode = removedNode.previous
+    const nextNode = removedNode.next
+
+    if (previousNode && nextNode) {
+      previousNode.next = nextNode
+      nextNode.previous = previousNode
+    } else if (previousNode) {
+      previousNode.next = undefined
+      this.#tail = previousNode
+    } else if (nextNode) {
+      nextNode.previous = undefined
+      this.#head = nextNode
+    } else {
+      this.#head = undefined
+      this.#tail = undefined
+    }
+
+    this.#size--
     return
   }
 
