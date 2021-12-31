@@ -16,8 +16,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "build": "tsup src/exports.ts --format cjs,esm --dts",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
-    "release": "x-release --tag 'algorithm@v${version}' --commit 'chore: release algorithm@v${version}'  --npm pnpm"
+    "release": "x-release --tag '@0x-jerry/algorithm@v${version}' --commit 'chore: release @0x-jerry/algorithm@${version}'  --npm pnpm"
   },
   "dependencies": {
     "@0x-jerry/utils": "workspace:*"
