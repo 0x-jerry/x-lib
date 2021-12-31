@@ -32,13 +32,28 @@ describe('LinkedList', () => {
     expect(linkedList.tail?.value).toBe(1)
   })
 
+  it('size', () => {
+    const linkedList = new LinkedList<number>()
+    expect(linkedList.size).toBe(0)
+
+    linkedList.insert(1)
+    expect(linkedList.size).toBe(1)
+
+    linkedList.insert(2)
+    expect(linkedList.size).toBe(2)
+
+    linkedList.remove(1)
+    expect(linkedList.size).toBe(1)
+  })
+
   it('insert', () => {
     const linkedList = new LinkedList<number>()
 
     linkedList.insert(1)
     linkedList.insert(2)
-    linkedList.insert(3)
+    expect(linkedList.toArray()).toEqual([2, 1])
 
+    linkedList.insert(3)
     expect(linkedList.toArray()).toEqual([3, 2, 1])
   })
 
@@ -63,5 +78,21 @@ describe('LinkedList', () => {
     linkedList.append(4, node)
 
     expect(linkedList.toArray()).toEqual([1, 2, 4, 3])
+  })
+
+  it('remove', () => {
+    const linkedList = LinkedList.create([1, 2, 3, 4])
+
+    linkedList.remove(1)
+    expect(linkedList.toArray()).toEqual([2, 3, 4])
+
+    linkedList.remove(3)
+    expect(linkedList.toArray()).toEqual([2, 4])
+
+    linkedList.remove(4)
+    expect(linkedList.toArray()).toEqual([2])
+
+    linkedList.remove(2)
+    expect(linkedList.toArray()).toEqual([])
   })
 })
