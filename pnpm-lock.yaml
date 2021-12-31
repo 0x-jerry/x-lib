@@ -79,10 +79,7 @@ importers:
       mock-socket: registry.npmmirror.com/mock-socket/9.0.8
 
   packages/utils:
-    specifiers:
-      '@0x-jerry/x-release': ^0.3.2
-    devDependencies:
-      '@0x-jerry/x-release': registry.npmmirror.com/@0x-jerry/x-release/0.3.2
+    specifiers: {}
 
 packages:
 
