@@ -174,16 +174,9 @@ export class LinkedList<T = unknown> {
       next: () => {
         const value = iterator.next().value
 
-        if (value) {
-          return {
-            done: false,
-            value: value.value,
-          }
-        } else {
-          return {
-            done: true,
-            value: undefined,
-          }
+        return {
+          done: !value,
+          value: value?.value,
         }
       },
     }
