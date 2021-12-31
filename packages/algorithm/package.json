@@ -1,6 +1,6 @@
 {
   "name": "@0x-jerry/algorithm",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "main": "./dist/exports.js",
   "module": "./dist/exports.mjs",
