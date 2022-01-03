@@ -40,12 +40,16 @@ export class EventEmitter<Events extends Record<string, ListenerFunction>> {
     return this.#listeners[event]!
   }
 
-  on<K extends keyof Events>(event: K, listener: Events[K]) {
+  on<K extends keyof Events>(event: K, listener: Events[K]): () => void {
     const events = this.events(event)
 
     this.#checkLimit(events.size)
 
     events.add(listener)
+
+    return () => {
+      this.off(event, listener)
+    }
   }
 
   once<K extends keyof Events>(event: K, listener: Events[K]) {

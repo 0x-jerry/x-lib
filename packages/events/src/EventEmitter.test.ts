@@ -68,4 +68,17 @@ describe('EventEmitter', () => {
     expect(() => ee.on('test', () => {})).toThrow('Listeners reached limit size: 1')
     expect(() => ee.once('test', () => {})).toThrow('Listeners reached limit size: 1')
   })
+
+  it('on then off', () => {
+    const ee = new EventEmitter<Events>()
+
+    const fn = jest.fn()
+
+    const off = ee.on('bar', () => fn())
+    ee.emit('bar', 12, '123')
+
+    off()
+
+    expect(fn).toBeCalledTimes(1)
+  })
 })
