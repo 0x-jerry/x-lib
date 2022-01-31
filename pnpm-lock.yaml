@@ -79,7 +79,10 @@ importers:
       mock-socket: registry.npmmirror.com/mock-socket/9.0.8
 
   packages/utils:
-    specifiers: {}
+    specifiers:
+      '@0x-jerry/events': workspace:*
+    dependencies:
+      '@0x-jerry/events': link:../events
 
 packages:
 

@@ -17,5 +17,8 @@
     "test:coverage": "jest --coverage",
     "build": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release --tag '@0x-jerry/utils@${version}' --commit 'chore: release @0x-jerry/utils@${version}' --npm pnpm"
+  },
+  "dependencies": {
+    "@0x-jerry/events": "workspace:*"
   }
 }

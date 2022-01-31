@@ -8,10 +8,11 @@ main()
 async function main() {
   const projectNames = [
     //
-    'utils',
     'events',
     'key-events',
     'logger',
+
+    'utils',
 
     'dom-navigator',
     'conf',
