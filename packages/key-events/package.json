@@ -18,6 +18,7 @@
     "build": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release"
   },
+  "peerDependencies": {},
   "dependencies": {},
   "devDependencies": {}
 }

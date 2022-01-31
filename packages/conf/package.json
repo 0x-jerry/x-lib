@@ -18,6 +18,10 @@
     "build": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release"
   },
+  "peerDependencies": {
+    "@0x-jerry/utils": "*",
+    "@vue/reactivity": "^3.2.26"
+  },
   "dependencies": {
     "@0x-jerry/utils": "workspace:*",
     "@vue/reactivity": "^3.2.26"

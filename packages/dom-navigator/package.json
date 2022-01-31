@@ -18,6 +18,9 @@
     "build": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release"
   },
+  "peerDependencies": {
+    "@0x-jerry/key-events": "*"
+  },
   "dependencies": {
     "@0x-jerry/key-events": "workspace:*"
   }
