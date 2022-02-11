@@ -1,7 +1,6 @@
 export * from './isObject'
 export * from './sleep'
 export * from './toArray'
-export * from './tplStrings'
 export * from './LRU'
 export * from './createPolling'
 export * from './createRequestPoll'
