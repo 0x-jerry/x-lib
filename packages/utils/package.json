@@ -18,10 +18,7 @@
     "build": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release --tag '@0x-jerry/utils@${version}' --commit 'chore: release @0x-jerry/utils@${version}' --npm pnpm"
   },
-  "peerDependencies": {
-    "@0x-jerry/events": "*"
-  },
-  "dependencies": {
-    "@0x-jerry/events": "workspace:*"
+  "devDependencies": {
+    "@0x-jerry/events": "workspace:^0.1.0"
   }
 }
