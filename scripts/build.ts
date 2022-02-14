@@ -1,14 +1,15 @@
-import { join } from 'path'
-import { run, runInProject } from './shared'
-
-const dependencies = process.argv.slice(2)
+import { parse } from 'path'
+import { getDepsTree, getBuildSequence, build, getProjectDir } from './shared'
 
 main()
 
 async function main() {
-  for (const depProject of dependencies) {
-    await runInProject('build', join(__dirname, '../packages', depProject))
-  }
+  const projectName = parse(process.cwd()).name
+  const tree = await getDepsTree(projectName)
 
-  await run('tsup src/exports.ts --format cjs,esm --dts', process.cwd())
+  const buildSequence: string[] = getBuildSequence(tree)
+
+  for (const project of buildSequence) {
+    await build(getProjectDir(project))
+  }
 }

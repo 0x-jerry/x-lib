@@ -15,7 +15,7 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "ts-node ../../scripts/build.ts utils",
+    "build": "ts-node ../../scripts/build.ts",
     "release": "x-release"
   },
   "devDependencies": {

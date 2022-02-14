@@ -1,30 +1,27 @@
-import path from 'path'
-import { runInProject } from './shared'
-
-const packagesDir = path.join(process.cwd(), 'packages')
+import { join } from 'path'
+import { build, getBuildSequence, getDepsTree, getProjectDir, TreeNode } from './shared'
+import fs from 'fs/promises'
 
 main()
 
 async function main() {
-  const projectNames = [
-    //
-    'events',
-    'key-events',
-    'logger',
+  const packageNames = await fs.readdir(join(__dirname, '../packages'))
 
-    'utils',
+  const root: TreeNode = {
+    id: '',
+    children: [],
+  }
 
-    'dom-navigator',
-    'conf',
-    'algorithm',
+  for (const pkgName of packageNames) {
+    if (pkgName.startsWith('.')) continue
 
-    'socket',
-    'protocol',
-  ]
+    const node = await getDepsTree(pkgName, root)
+    root.children.push(node)
+  }
 
-  for (const projectName of projectNames) {
-    const packageCwd = path.join(packagesDir, projectName)
+  const seq = getBuildSequence(root).filter(Boolean)
 
-    await runInProject('build', packageCwd)
+  for (const project of seq) {
+    await build(getProjectDir(project))
   }
 }
