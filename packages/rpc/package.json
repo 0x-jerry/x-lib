@@ -16,7 +16,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "build": "ts-node ../../scripts/build.ts",
-    "release": "x-release"
+    "release": "x-release --tag '@0x-jerry/rpc@${version}' --commit 'chore: release @0x-jerry/rpc@${version}' --npm pnpm"
   },
   "devDependencies": {
     "@0x-jerry/events": "workspace:*",
