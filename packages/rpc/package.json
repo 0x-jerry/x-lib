@@ -1,5 +1,5 @@
 {
-  "name": "@0x-jerry/protocol",
+  "name": "@0x-jerry/rpc",
   "version": "0.0.1",
   "license": "MIT",
   "main": "./dist/exports.js",
@@ -15,14 +15,11 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "tsup src/exports.ts --format cjs,esm --dts",
+    "build": "ts-node ../../scripts/build.ts events utils",
+    "build:package": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release"
   },
-  "peerDependencies": {
-    "@0x-jerry/events": "*",
-    "@0x-jerry/utils": "*"
-  },
-  "dependencies": {
+  "devDependencies": {
     "@0x-jerry/events": "workspace:*",
     "@0x-jerry/utils": "workspace:*"
   }
