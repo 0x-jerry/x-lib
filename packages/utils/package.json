@@ -15,10 +15,10 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "tsup src/exports.ts --format cjs,esm --dts",
+    "build": "ts-node ../../scripts/build.ts events",
     "release": "x-release --tag '@0x-jerry/utils@${version}' --commit 'chore: release @0x-jerry/utils@${version}' --npm pnpm"
   },
   "devDependencies": {
-    "@0x-jerry/events": "workspace:^0.1.0"
+    "@0x-jerry/events": "workspace:*"
   }
 }

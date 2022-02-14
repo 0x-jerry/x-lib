@@ -15,7 +15,7 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "tsup src/exports.ts --format cjs,esm --dts",
+    "build": "ts-node ../../scripts/build.ts",
     "release": "x-release --tag '@0x-jerry/events@${version}' --commit 'chore: release @0x-jerry/events@${version}' --npm pnpm"
   },
   "peerDependencies": {},

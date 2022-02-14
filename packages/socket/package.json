@@ -15,18 +15,12 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "tsup src/exports.ts --format cjs,esm --dts",
+    "build": "ts-node ../../scripts/build.ts events utils",
     "release": "x-release"
   },
-  "peerDependencies": {
-    "@0x-jerry/events": "*",
-    "@0x-jerry/utils": "*"
-  },
-  "dependencies": {
-    "@0x-jerry/events": "workspace:*",
-    "@0x-jerry/utils": "workspace:*"
-  },
   "devDependencies": {
+    "@0x-jerry/events": "workspace:*",
+    "@0x-jerry/utils": "workspace:*",
     "mock-socket": "^9.0.8"
   }
 }

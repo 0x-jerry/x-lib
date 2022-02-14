@@ -15,14 +15,10 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "tsup src/exports.ts --format cjs,esm --dts",
+    "build": "ts-node ../../scripts/build.ts utils",
     "release": "x-release"
   },
-  "peerDependencies": {
-    "@0x-jerry/utils": "*",
-    "@vue/reactivity": "^3.2.26"
-  },
-  "dependencies": {
+  "devDependencies": {
     "@0x-jerry/utils": "workspace:*",
     "@vue/reactivity": "^3.2.26"
   }
