@@ -1,15 +1,12 @@
-import { RPCRequest, RPCResponse } from './shared'
+import { RPCRequest, RPCResponse, RPCMessage } from './shared'
 
 export interface RPCMethods {
   [key: string]: (...args: any[]) => any
 }
 
 export interface RPCOption {
-  send: (data: string) => any
-  receive: (resolver: (data: string) => void) => any
-
-  serialize?: (data: any) => string
-  deserialize?: (data: string) => any
+  send: (data: RPCMessage) => any
+  receive: (resolver: (data: RPCMessage) => void) => any
 }
 
 type RPCServer<T extends RPCMethods> = {
@@ -30,9 +27,7 @@ export function createRPC<Server extends RPCMethods, Client extends RPCMethods =
 
   const record = new Map<string, PPromise<any>>()
 
-  ctx.receive(async (data) => {
-    const msg = ctx.deserialize(data) as RPCRequest | RPCResponse
-
+  ctx.receive(async (msg) => {
     if (msg.type === 'q') {
       // request
       const r: RPCResponse = {
@@ -48,7 +43,7 @@ export function createRPC<Server extends RPCMethods, Client extends RPCMethods =
         r.error = error
       }
 
-      ctx.send(ctx.serialize(r))
+      ctx.send(r)
       return
     }
 
@@ -83,7 +78,7 @@ export function createRPC<Server extends RPCMethods, Client extends RPCMethods =
           const p = P()
           record.set(req.id, p)
 
-          ctx.send(ctx.serialize(req))
+          ctx.send(req)
 
           return p.p
         }

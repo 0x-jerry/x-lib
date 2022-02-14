@@ -11,3 +11,5 @@ export interface RPCResponse {
   result?: any
   error?: any
 }
+
+export type RPCMessage = RPCRequest | RPCResponse
