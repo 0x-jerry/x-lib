@@ -1,28 +1,28 @@
 import { EventEmitter } from '@0x-jerry/events'
 
-export interface RequestPollOption {
+export interface RequestPoolOption {
   /**
    * @default 10
    */
   max: number
 }
 
-type RequestPollEvents = {
+type RequestPoolEvents = {
   next(): void
 }
 
-interface RequestPollContext {
+interface RequestPoolContext {
   count: number
-  event: EventEmitter<RequestPollEvents>
+  event: EventEmitter<RequestPoolEvents>
 }
 
-export function createRequestPoll<T extends (...arg: any[]) => Promise<any>>(
+export function createRequestPool<T extends (...arg: any[]) => Promise<any>>(
   request: T,
-  opt: Partial<RequestPollOption> = {}
+  opt: Partial<RequestPoolOption> = {}
 ): T {
-  const option: RequestPollOption = Object.assign({ max: 5 }, opt)
+  const option: RequestPoolOption = Object.assign({ max: 5 }, opt)
 
-  const ctx: RequestPollContext = {
+  const ctx: RequestPoolContext = {
     count: 0,
     event: new EventEmitter(20),
   }

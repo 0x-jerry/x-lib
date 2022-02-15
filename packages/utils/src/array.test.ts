@@ -1,4 +1,4 @@
-import { toArray } from './toArray'
+import { toArray } from './array'
 
 describe('toArray', () => {
   it('array', () => {
