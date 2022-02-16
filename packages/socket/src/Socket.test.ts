@@ -56,7 +56,7 @@ describe('Socket', () => {
 
     const fn = jest.fn()
 
-    socket.on('parse-msg-error', fn)
+    socket.on('deserialize-error', fn)
 
     socket.send({
       type: 'test',

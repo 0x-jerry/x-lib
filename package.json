@@ -5,7 +5,8 @@
   "scripts": {
     "rp": "ts-node ./scripts/runAll.ts",
     "setup": "ts-node ./scripts/setup.ts",
-    "test": "pnpm exec jest",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "release": "pnpm run rp release"
   },
   "devDependencies": {
