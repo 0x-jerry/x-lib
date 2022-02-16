@@ -57,7 +57,10 @@ importers:
     specifiers: {}
 
   packages/logger:
-    specifiers: {}
+    specifiers:
+      '@0x-jerry/utils': workspace:^0.4.1
+    devDependencies:
+      '@0x-jerry/utils': link:../utils
 
   packages/rpc:
     specifiers:

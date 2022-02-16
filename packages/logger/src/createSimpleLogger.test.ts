@@ -2,36 +2,74 @@ import { createSimpleLogger } from './createSimpleLogger'
 
 describe('createSimpleLogger', () => {
   it('output', () => {
-    let ns, other
+    let prefix, other
 
     const clear = () => {
-      ns = undefined
+      prefix = undefined
       other = undefined
     }
 
     console.warn =
       console.error =
       console.log =
-        ($ns, ...$other) => {
-          ns = $ns
+        ($prefix, ...$other) => {
+          prefix = $prefix
           other = $other
         }
 
-    const logger = createSimpleLogger('tt')
+    const logger = createSimpleLogger('[tt]')
 
     logger.log('hello')
-    expect(ns).toBe('[tt]')
+    expect(prefix).toBe('[tt]')
     expect(other).toEqual(['hello'])
     clear()
 
     logger.warn('hello')
-    expect(ns).toBe('[tt]')
+    expect(prefix).toBe('[tt]')
     expect(other).toEqual(['hello'])
     clear()
 
     logger.error('hello')
-    expect(ns).toBe('[tt]')
+    expect(prefix).toBe('[tt]')
     expect(other).toEqual(['hello'])
+    clear()
+  })
+
+  it('function prefix', () => {
+    let prefix, level
+
+    const clear = () => {
+      prefix = undefined
+      level = undefined
+    }
+
+    console.warn =
+      console.error =
+      console.log =
+        ($prefix) => {
+          prefix = $prefix
+        }
+
+    let idx = 0
+
+    const logger = createSimpleLogger((t) => {
+      level = t
+      return `[${idx++}]`
+    })
+
+    logger.log('hello')
+    expect(prefix).toBe('[0]')
+    expect(level).toBe('info')
+    clear()
+
+    logger.warn('hello')
+    expect(prefix).toBe('[1]')
+    expect(level).toBe('warn')
+    clear()
+
+    logger.error('hello')
+    expect(prefix).toBe('[2]')
+    expect(level).toBe('error')
     clear()
   })
 })
