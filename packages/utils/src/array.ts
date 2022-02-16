@@ -1,4 +1,4 @@
-import { Arrayable } from './typing'
+import { Arrayable } from './types'
 
 /**
  * Ensure return an array of element T.
