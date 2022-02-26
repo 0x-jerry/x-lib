@@ -15,12 +15,14 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "ts-node ../../scripts/build.ts",
+    "build": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release"
   },
+  "dependencies": {
+    "@0x-jerry/events": "*",
+    "@0x-jerry/utils": "*"
+  },
   "devDependencies": {
-    "@0x-jerry/events": "workspace:*",
-    "@0x-jerry/utils": "workspace:*",
     "mock-socket": "^9.0.8"
   }
 }

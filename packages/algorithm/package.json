@@ -15,10 +15,10 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "ts-node ../../scripts/build.ts",
+    "build": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release --tag '@0x-jerry/algorithm@v${version}' --commit 'chore: release @0x-jerry/algorithm@${version}'  --npm pnpm"
   },
-  "devDependencies": {
-    "@0x-jerry/utils": "workspace:*"
+  "dependencies": {
+    "@0x-jerry/utils": "*"
   }
 }

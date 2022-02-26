@@ -32,8 +32,8 @@ importers:
 
   packages/algorithm:
     specifiers:
-      '@0x-jerry/utils': workspace:*
-    devDependencies:
+      '@0x-jerry/utils': '*'
+    dependencies:
       '@0x-jerry/utils': link:../utils
 
   packages/conf:
@@ -58,32 +58,33 @@ importers:
 
   packages/logger:
     specifiers:
-      '@0x-jerry/utils': workspace:^0.4.1
-    devDependencies:
+      '@0x-jerry/utils': '*'
+    dependencies:
       '@0x-jerry/utils': link:../utils
 
   packages/rpc:
     specifiers:
-      '@0x-jerry/events': workspace:*
-      '@0x-jerry/utils': workspace:*
-    devDependencies:
+      '@0x-jerry/events': '*'
+      '@0x-jerry/utils': '*'
+    dependencies:
       '@0x-jerry/events': link:../events
       '@0x-jerry/utils': link:../utils
 
   packages/socket:
     specifiers:
-      '@0x-jerry/events': workspace:*
-      '@0x-jerry/utils': workspace:*
+      '@0x-jerry/events': '*'
+      '@0x-jerry/utils': '*'
       mock-socket: ^9.0.8
-    devDependencies:
+    dependencies:
       '@0x-jerry/events': link:../events
       '@0x-jerry/utils': link:../utils
+    devDependencies:
       mock-socket: registry.npmmirror.com/mock-socket/9.0.8
 
   packages/utils:
     specifiers:
-      '@0x-jerry/events': workspace:*
-    devDependencies:
+      '@0x-jerry/events': ^0.1.0
+    dependencies:
       '@0x-jerry/events': link:../events
 
 packages:

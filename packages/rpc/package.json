@@ -15,11 +15,11 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "ts-node ../../scripts/build.ts",
+    "build": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release --tag '@0x-jerry/rpc@${version}' --commit 'chore: release @0x-jerry/rpc@${version}' --npm pnpm"
   },
-  "devDependencies": {
-    "@0x-jerry/events": "workspace:*",
-    "@0x-jerry/utils": "workspace:*"
+  "dependencies": {
+    "@0x-jerry/events": "*",
+    "@0x-jerry/utils": "*"
   }
 }

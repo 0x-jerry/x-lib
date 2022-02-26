@@ -18,7 +18,7 @@
     "build": "ts-node ../../scripts/build.ts",
     "release": "x-release"
   },
-  "devDependencies": {
-    "@0x-jerry/utils": "workspace:^0.4.1"
+  "dependencies": {
+    "@0x-jerry/utils": "*"
   }
 }
