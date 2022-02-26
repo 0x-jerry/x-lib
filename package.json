@@ -1,22 +1,20 @@
 {
-  "name": "x-lib",
+  "name": "@0x-jerry/x-lib",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "rp": "ts-node ./scripts/runAll.ts",
-    "setup": "ts-node ./scripts/setup.ts",
     "test": "jest",
     "test:watch": "jest --watch",
-    "release": "pnpm run rp release"
+    "release": "x-release"
+  },
+  "dependencies": {
+    "@0x-jerry/utils": "^1.0.1",
+    "@vue/reactivity": "^3.2.31"
   },
   "devDependencies": {
-    "@0x-jerry/eslint-config": "^0.2.0",
     "@0x-jerry/x-release": "^0.3.2",
     "@types/jest": "^27.4.0",
     "@types/node": "^16.11.17",
-    "conventional-changelog-cli": "^2.2.2",
-    "eslint": "^7.32.0",
-    "execa": "^5.1.1",
     "jest": "^27.4.5",
     "ts-jest": "^27.1.2",
     "ts-node": "^10.4.0",
