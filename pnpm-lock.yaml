@@ -34,7 +34,7 @@ importers:
     specifiers:
       '@0x-jerry/utils': '*'
     dependencies:
-      '@0x-jerry/utils': link:../utils
+      '@0x-jerry/utils': registry.npmmirror.com/@0x-jerry/utils/0.5.2
 
   packages/conf:
     specifiers:
@@ -60,15 +60,15 @@ importers:
     specifiers:
       '@0x-jerry/utils': '*'
     dependencies:
-      '@0x-jerry/utils': link:../utils
+      '@0x-jerry/utils': registry.npmmirror.com/@0x-jerry/utils/0.5.2
 
   packages/rpc:
     specifiers:
       '@0x-jerry/events': '*'
       '@0x-jerry/utils': '*'
     dependencies:
-      '@0x-jerry/events': link:../events
-      '@0x-jerry/utils': link:../utils
+      '@0x-jerry/events': registry.npmmirror.com/@0x-jerry/events/0.2.0
+      '@0x-jerry/utils': registry.npmmirror.com/@0x-jerry/utils/0.5.2
 
   packages/socket:
     specifiers:
@@ -76,8 +76,8 @@ importers:
       '@0x-jerry/utils': '*'
       mock-socket: ^9.0.8
     dependencies:
-      '@0x-jerry/events': link:../events
-      '@0x-jerry/utils': link:../utils
+      '@0x-jerry/events': registry.npmmirror.com/@0x-jerry/events/0.2.0
+      '@0x-jerry/utils': registry.npmmirror.com/@0x-jerry/utils/0.5.2
     devDependencies:
       mock-socket: registry.npmmirror.com/mock-socket/9.0.8
 
@@ -85,7 +85,7 @@ importers:
     specifiers:
       '@0x-jerry/events': '*'
     dependencies:
-      '@0x-jerry/events': link:../events
+      '@0x-jerry/events': registry.npmmirror.com/@0x-jerry/events/0.2.0
 
 packages:
 
@@ -3051,6 +3051,20 @@ packages:
       - supports-color
       - typescript
     dev: true
+
+  registry.npmmirror.com/@0x-jerry/events/0.2.0:
+    resolution: {integrity: sha512-fUbUZdDhdzF8aJHQs9Q85YkDnUrS8VhGGCxpBCr6Nvv+3kGRob9p9S0ZBAB7kPjB0QYPxcOvmw4Us73nhsRKww==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@0x-jerry/events/-/events-0.2.0.tgz}
+    name: '@0x-jerry/events'
+    version: 0.2.0
+    dev: false
+
+  registry.npmmirror.com/@0x-jerry/utils/0.5.2:
+    resolution: {integrity: sha512-tzXJaNKUzbg8GddTMhVRtLI1BM7nNm6MFwu8ty74MDOsUMrHhI0Teq13LYUSIsN/f7Ww2xfPbUWMJ6RwytJEEA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@0x-jerry/utils/-/utils-0.5.2.tgz}
+    name: '@0x-jerry/utils'
+    version: 0.5.2
+    dependencies:
+      '@0x-jerry/events': registry.npmmirror.com/@0x-jerry/events/0.2.0
+    dev: false
 
   registry.npmmirror.com/@0x-jerry/x-release/0.3.2:
     resolution: {integrity: sha512-I0VOLvTFMqKoy59M9X3ZCLck343wNNPvyKlUAV4wj+wvy9UV0xWBHAgpa1sWnWq15lmWliTNJvvqZLavoZGUaQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@0x-jerry/x-release/download/@0x-jerry/x-release-0.3.2.tgz}
