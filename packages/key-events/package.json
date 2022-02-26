@@ -15,10 +15,7 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "ts-node ../../scripts/build.ts",
+    "build": "tsup src/exports.ts --format cjs,esm --dts",
     "release": "x-release"
-  },
-  "peerDependencies": {},
-  "dependencies": {},
-  "devDependencies": {}
+  }
 }
