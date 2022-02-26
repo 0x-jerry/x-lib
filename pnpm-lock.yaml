@@ -83,7 +83,7 @@ importers:
 
   packages/utils:
     specifiers:
-      '@0x-jerry/events': ^0.1.0
+      '@0x-jerry/events': '*'
     dependencies:
       '@0x-jerry/events': link:../events
 

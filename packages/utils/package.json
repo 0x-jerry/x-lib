@@ -19,6 +19,6 @@
     "release": "x-release --tag '@0x-jerry/utils@${version}' --commit 'chore: release @0x-jerry/utils@${version}' --npm pnpm"
   },
   "dependencies": {
-    "@0x-jerry/events": "^0.1.0"
+    "@0x-jerry/events": "*"
   }
 }
