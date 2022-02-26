@@ -19,6 +19,6 @@
     "release": "x-release"
   },
   "dependencies": {
-    "@0x-jerry/key-events": "*"
+    "@0x-jerry/utils": "*"
   }
 }
